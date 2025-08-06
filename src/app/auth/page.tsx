@@ -4,10 +4,9 @@ import Input from '@/components/atoms/Input'
 export default function Login() {
   return (
     <>
-      <Input placeholder="Enter name" />
-      {/* <div className="w-[150px] p-2 border border-white rounded-md">
+      <div className="w-[150px] p-2 border border-white rounded-md">
         <Button>Click me</Button>
-      </div> */}
+      </div>
     </>
   )
 }

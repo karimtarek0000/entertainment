@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <div className="bg-blue-500 text-6xl">
+    <h1 className="bg-primary text-para-md text-white p-2">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate, sed.
-    </div>
+    </h1>
   )
 }
