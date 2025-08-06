@@ -1,9 +1,26 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-roboto: --font-roboto;
+  /* Colors */
+  --color-primary: #10141e;
+  --color-secondary: #161d2f;
+  --color-thired: #fc4747;
+  --color-fourth: #5a698f;
+
+  /* Font */
+  --font-outfit: --font-outfit;
+
+  /* Font Sizes 
+    Heading: 32 - 24 - 18
+    Paragraph: 15 - 13
+  */
+  --text-head-lg: 2rem;
+  --text-head-md: 1.5rem;
+  --text-head-xs: 1.125rem;
+  --text-para-md: 0.9375rem;
+  --text-para-sm: 0.8125rem;
 }
 
 body {
-  @apply font-roboto;
+  @apply font-outfit;
 }
