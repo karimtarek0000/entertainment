@@ -1,12 +1,10 @@
-import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Input'
+import Form from '@/components/molecules/LoginForm'
 
 export default function Login() {
   return (
     <>
-      <div className="w-[150px] p-2 border border-white rounded-md">
-        <Button>Click me</Button>
-      </div>
+      <h1 className="auth-heading">Login</h1>
+      <Form />
     </>
   )
 }

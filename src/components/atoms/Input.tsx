@@ -15,7 +15,9 @@ export default function Input({
   return (
     <>
       <input
-        className={`input ${error && 'border-red-500 focus:border-red-500'}`}
+        className={`input ${
+          error ? 'border-red-500 focus:border-red-500' : ''
+        }`}
         type="text"
         {...attrs}
       />

@@ -1,3 +1,10 @@
+import Form from '@/components/molecules/LoginForm'
+
 export default function SignUp() {
-  return <h1 className="bg-primary text-para-md text-white p-2">Sign Up</h1>
+  return (
+    <>
+      <h1 className="auth-heading">Sign up</h1>
+      <Form />
+    </>
+  )
 }
