@@ -14,7 +14,11 @@ export default function Input({
 }: Partial<InputProps>) {
   return (
     <>
-      <input className="input" type="text" {...attrs} />
+      <input
+        className={`input ${error && 'border-red-500 focus:border-red-500'}`}
+        type="text"
+        {...attrs}
+      />
       {error && <span className="text-[10px] text-third">{errorMessage}</span>}
     </>
   )
