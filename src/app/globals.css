@@ -4,7 +4,7 @@
   /* Colors */
   --color-primary: #10141e;
   --color-secondary: #161d2f;
-  --color-thired: #fc4747;
+  --color-third: #fc4747;
   --color-fourth: #5a698f;
 
   /* Font */
@@ -27,4 +27,9 @@ html {
 
 body {
   @apply font-outfit px-10;
+}
+
+/*  */
+@utility input {
+  @apply border-b w-full ps-2 caret-third border-[#485473] focus:outline-none focus:border-white h-[37px] leading-0;
 }
