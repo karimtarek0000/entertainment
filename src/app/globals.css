@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+html {
+  @apply bg-primary text-white;
+}
+
+body {
+  @apply font-outfit px-10;
+}
+
 @theme {
   /* Colors */
   --color-primary: #10141e;
@@ -19,14 +27,6 @@
   --text-head-sm: 1.125rem;
   --text-para-md: 0.9375rem;
   --text-para-sm: 0.8125rem;
-}
-
-html {
-  @apply bg-primary text-white;
-}
-
-body {
-  @apply font-outfit px-10;
 }
 
 /*  */
