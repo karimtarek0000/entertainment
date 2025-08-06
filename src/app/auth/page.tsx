@@ -1,11 +1,13 @@
 import Button from '@/components/atoms/Button'
-import Form from '@/components/molecules/Form'
+import Input from '@/components/atoms/Input'
 
 export default function Login() {
   return (
     <>
-      {/* <Form className="w-[150px]" /> */}
-      <Button>Click me</Button>
+      <Input placeholder="Enter name" />
+      {/* <div className="w-[150px] p-2 border border-white rounded-md">
+        <Button>Click me</Button>
+      </div> */}
     </>
   )
 }
