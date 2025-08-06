@@ -1,16 +1,18 @@
 import twMerge from '@/utils/twMerge'
-import { PropsWithChildren } from 'react'
+import { ComponentProps, PropsWithChildren } from 'react'
 
 type Variants = 'primary' | 'secondary'
 
-interface ButtonProps extends PropsWithChildren {
+interface ButtonProps extends PropsWithChildren, ComponentProps<'button'> {
   variant?: Variants
 }
 
-const globalClasses = 'text-center flex-center'
+// Classes
+const globalClasses =
+  'text-center flex-center duration-150 cursor-pointer text-white transition-colors'
 const variants: Record<Variants, string> = {
   primary:
-    'bg-third text-para-md hover:bg-white cursor-pointer duration-150 transition-colors hover:text-black rounded-md h-[48px] w-full text-white',
+    'bg-third text-para-md hover:bg-white hover:text-black rounded-md h-[3rem] w-full',
   secondary: 'w-[7.3125rem] h-[2.9375rem] bg-white rounded-full',
 }
 
