@@ -21,6 +21,10 @@
   --text-para-sm: 0.8125rem;
 }
 
+html {
+  @apply bg-primary text-white;
+}
+
 body {
-  @apply font-outfit;
+  @apply font-outfit px-10;
 }
