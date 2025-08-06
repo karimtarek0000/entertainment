@@ -33,3 +33,7 @@ body {
 @utility input {
   @apply border-b w-full ps-2 caret-third border-[#485473] focus:outline-none focus:border-white h-[37px] leading-0;
 }
+
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
