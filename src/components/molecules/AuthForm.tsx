@@ -9,13 +9,6 @@ interface FormProps extends ComponentProps<'form'> {
   type: 'login' | 'sign-up'
 }
 
-interface AuthFieldConfig {
-  type: string
-  ariaLabel: string
-  name: string
-  placeholder: string
-}
-
 export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
   return (
     <form
