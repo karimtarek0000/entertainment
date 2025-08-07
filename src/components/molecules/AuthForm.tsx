@@ -20,7 +20,7 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
   return (
     <form
       {...attrs}
-      className="[&>*:nth-child(-n+2)]:mb-6 [&>*:last-child]:mt-10 [&>*:last-child]:mb-6"
+      className="[&>input:not(:last-of-type)]:mb-6 [&>*:last-child]:mt-10 [&>*:last-child]:mb-6"
     >
       {authUI[type].inputs.map((field: AuthFieldConfig) => {
         return (

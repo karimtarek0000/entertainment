@@ -4,7 +4,7 @@ export default function Login() {
   return (
     <>
       <h1 className="auth-heading">Login</h1>
-      <AuthForm type="sign-up" />
+      <AuthForm type="login" />
     </>
   )
 }
