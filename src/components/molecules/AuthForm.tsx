@@ -11,30 +11,34 @@ interface FormProps extends ComponentProps<'form'> {
 }
 
 // Start: Schema validation
-const loginSchema = z.object({
-  email: z.string().min(1, 'Email is required').email('Invalid email address'),
-  password: z.string().min(8, 'Password is required'),
-})
-
-const signUpSchema = z
-  .object({
+const schemas = {
+  login: z.object({
     email: z
       .string()
       .min(1, 'Email is required')
       .email('Invalid email address'),
-    password: z
-      .string()
-      .min(1, 'Password is required')
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        'Password must be at least 8 characters with uppercase, lowercase, number, and special character',
-      ),
-    repeatPassword: z.string().min(1, 'Please confirm your password'),
-  })
-  .refine(data => data.password === data.repeatPassword, {
-    message: "Passwords don't match",
-    path: ['repeatPassword'],
-  })
+    password: z.string().min(8, 'Password is required'),
+  }),
+  'sign-up': z
+    .object({
+      email: z
+        .string()
+        .min(1, 'Email is required')
+        .email('Invalid email address'),
+      password: z
+        .string()
+        .min(1, 'Password is required')
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          'Password must be at least 8 characters with uppercase, lowercase, number, and special character',
+        ),
+      repeatPassword: z.string().min(1, 'Please confirm your password'),
+    })
+    .refine(data => data.password === data.repeatPassword, {
+      message: "Passwords don't match",
+      path: ['repeatPassword'],
+    }),
+}
 // End
 
 export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
@@ -45,11 +49,9 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const schema = type === 'login' ? loginSchema : signUpSchema
-
-  // Separate validation function
+  // Validation filed
   const validateField = (fieldName: string, formData: typeof form) => {
-    const result = schema.safeParse(formData)
+    const result = schemas[type].safeParse(formData)
 
     if (!result.success) {
       // Find error for this specific field
@@ -70,6 +72,12 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
     }
   }
 
+  // Check if form is valid
+  const isFormValid = () => {
+    const result = schemas[type].safeParse(form)
+    return result.success
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
 
@@ -81,9 +89,16 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
     validateField(name, updatedForm)
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    console.log(form)
+  }
+
   return (
     <form
       {...attrs}
+      onSubmit={handleSubmit}
       className="[&>input:not(:last-of-type)]:mb-6 [&>*:last-child]:mt-10 [&>*:last-child]:mb-6"
     >
       {authUI[type].inputs.map((field: AuthFieldConfig) => {
@@ -101,7 +116,9 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
           />
         )
       })}
-      <Button type="submit">{authUI[type].submit.text}</Button>
+      <Button disabled={!isFormValid()} type="submit">
+        {authUI[type].submit.text}
+      </Button>
     </form>
   )
 }
