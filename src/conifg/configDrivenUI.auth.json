@@ -35,7 +35,7 @@
       {
         "type": "password",
         "ariaLabel": "repeat password",
-        "name": "repeat-password",
+        "name": "repeatPassword",
         "placeholder": "repeat password"
       }
     ],

@@ -43,14 +43,23 @@ const schemas = {
 
 export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
   const [form, setForm] = useState({
-    email: '',
-    password: '',
-    repeatPassword: '',
+    login: {
+      email: '',
+      password: '',
+    },
+    'sign-up': {
+      email: '',
+      password: '',
+      repeatPassword: '',
+    },
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   // Validation filed
-  const validateField = (fieldName: string, formData: typeof form) => {
+  const validateField = (
+    fieldName: string,
+    formData: (typeof form)[typeof type],
+  ) => {
     const result = schemas[type].safeParse(formData)
 
     if (!result.success) {
@@ -74,7 +83,7 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
 
   // Check if form is valid
   const isFormValid = () => {
-    const result = schemas[type].safeParse(form)
+    const result = schemas[type].safeParse(form[type])
     return result.success
   }
 
@@ -82,17 +91,17 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
     const { name, value } = e.target
 
     // Update form with new value
-    const updatedForm = { ...form, [name]: value }
+    const updatedForm = { ...form, [type]: { ...form[type], [name]: value } }
     setForm(updatedForm)
 
     // Validate with updated form data
-    validateField(name, updatedForm)
+    validateField(name, updatedForm[type])
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log(form)
+    console.log(form[type])
   }
 
   return (
@@ -107,7 +116,7 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
             key={field.name}
             name={field.name}
             type={field.type}
-            value={form[field.name as keyof typeof form]}
+            value={form[type][field.name as keyof (typeof form)[typeof type]]}
             onChange={handleChange}
             aria-label={field.ariaLabel}
             placeholder={field.placeholder}
