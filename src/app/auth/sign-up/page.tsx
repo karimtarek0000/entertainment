@@ -1,4 +1,4 @@
-import Form from '@/components/molecules/LoginForm'
+import Form from '@/components/molecules/AuthForm'
 
 export default function SignUp() {
   return (

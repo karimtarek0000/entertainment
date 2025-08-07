@@ -31,7 +31,7 @@ body {
 
 /*  */
 @utility input {
-  @apply border-b w-full ps-4 pb-5 text-head-sm caret-third border-[#485473] focus:outline-none focus:border-white h-[37px] leading-0;
+  @apply border-b w-full ps-4 pb-5 text-head-sm caret-third border-[#485473] focus:outline-none focus:border-white h-[37px] leading-0 capitalize;
 }
 
 @utility flex-center {

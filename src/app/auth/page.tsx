@@ -1,10 +1,10 @@
-import Form from '@/components/molecules/LoginForm'
+import AuthForm from '@/components/molecules/AuthForm'
 
 export default function Login() {
   return (
     <>
       <h1 className="auth-heading">Login</h1>
-      <Form />
+      <AuthForm type="sign-up" />
     </>
   )
 }
