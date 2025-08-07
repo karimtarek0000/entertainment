@@ -18,7 +18,7 @@
       "text": "Login to your account"
     }
   },
-  "sign-up": {
+  "signUp": {
     "inputs": [
       {
         "type": "email",

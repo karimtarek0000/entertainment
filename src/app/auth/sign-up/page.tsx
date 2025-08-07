@@ -5,7 +5,7 @@ export default function SignUp() {
   return (
     <>
       <h1 className="auth-heading">Sign up</h1>
-      <AuthForm type="sign-up" />
+      <AuthForm type="signUp" />
       <div className="flex-center text-para-md space-x-2">
         <p>Already have an account?</p>
         <Link className="text-third" href="/auth">

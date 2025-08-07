@@ -7,7 +7,7 @@ import { ComponentProps, JSX, useState } from 'react'
 import z from 'zod'
 
 interface FormProps extends ComponentProps<'form'> {
-  type: 'login' | 'sign-up'
+  type: 'login' | 'signUp'
 }
 
 // Start: Schema validation
@@ -19,7 +19,7 @@ const schemas = {
       .email('Invalid email address'),
     password: z.string().min(8, 'Password is required'),
   }),
-  'sign-up': z
+  signUp: z
     .object({
       email: z
         .string()
@@ -47,7 +47,7 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
       email: '',
       password: '',
     },
-    'sign-up': {
+    signUp: {
       email: '',
       password: '',
       repeatPassword: '',
