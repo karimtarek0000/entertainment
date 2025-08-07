@@ -3,7 +3,6 @@
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 import authUI from '@/conifg/configDrivenUI.auth.json'
-import path from 'path'
 import { ComponentProps, JSX, useState } from 'react'
 import z from 'zod'
 
@@ -13,15 +12,24 @@ interface FormProps extends ComponentProps<'form'> {
 
 // Start: Schema validation
 const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  email: z.string().min(1, 'Email is required').email('Invalid email address'),
+  password: z.string().min(8, 'Password is required'),
 })
 
 const signUpSchema = z
   .object({
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(6, 'Password must be at least 6 characters'),
-    repeatPassword: z.string(),
+    email: z
+      .string()
+      .min(1, 'Email is required')
+      .email('Invalid email address'),
+    password: z
+      .string()
+      .min(1, 'Password is required')
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        'Password must be at least 8 characters with uppercase, lowercase, number, and special character',
+      ),
+    repeatPassword: z.string().min(1, 'Please confirm your password'),
   })
   .refine(data => data.password === data.repeatPassword, {
     message: "Passwords don't match",
@@ -39,28 +47,38 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
 
   const schema = type === 'login' ? loginSchema : signUpSchema
 
-  // Simple function to get error message for a field
-  const getFieldError = (fieldName: string): string => {
-    const result = schema.safeParse(form)
+  // Separate validation function
+  const validateField = (fieldName: string, formData: typeof form) => {
+    const result = schema.safeParse(formData)
 
-    // Check if validation failed and errors exist
-    if (!result.success && result.error?.issues) {
+    if (!result.success) {
+      // Find error for this specific field
       const fieldError = result.error.issues.find(
-        error => error.path[0] === fieldName,
+        issue => issue.path[0] === fieldName,
       )
-      return fieldError?.message || ''
+      if (fieldError) {
+        setErrors(prev => ({ ...prev, [fieldName]: fieldError.message }))
+      }
     }
 
-    return ''
+    // Also clear the specific field error if no error found for it
+    if (
+      result.success ||
+      !result.error.issues.find(issue => issue.path[0] === fieldName)
+    ) {
+      setErrors(prev => ({ ...prev, [fieldName]: '' }))
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setForm(prev => ({ ...prev, [name]: value }))
 
-    // Get error message if exists
-    const errorMessage = getFieldError(name)
-    setErrors(prev => ({ ...prev, [name]: errorMessage }))
+    // Update form with new value
+    const updatedForm = { ...form, [name]: value }
+    setForm(updatedForm)
+
+    // Validate with updated form data
+    validateField(name, updatedForm)
   }
 
   return (
