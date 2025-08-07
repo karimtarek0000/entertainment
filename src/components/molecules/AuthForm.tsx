@@ -3,6 +3,7 @@
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 import authUI from '@/conifg/configDrivenUI.auth.json'
+import path from 'path'
 import { ComponentProps, JSX, useState } from 'react'
 import z from 'zod'
 
@@ -34,10 +35,32 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
     password: '',
     repeatPassword: '',
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const schema = type === 'login' ? loginSchema : signUpSchema
+
+  // Simple function to get error message for a field
+  const getFieldError = (fieldName: string): string => {
+    const result = schema.safeParse(form)
+
+    // Check if validation failed and errors exist
+    if (!result.success && result.error?.issues) {
+      const fieldError = result.error.issues.find(
+        error => error.path[0] === fieldName,
+      )
+      return fieldError?.message || ''
+    }
+
+    return ''
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
+
+    // Get error message if exists
+    const errorMessage = getFieldError(name)
+    setErrors(prev => ({ ...prev, [name]: errorMessage }))
   }
 
   return (
@@ -55,6 +78,8 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
             onChange={handleChange}
             aria-label={field.ariaLabel}
             placeholder={field.placeholder}
+            error={!!errors[field.name]}
+            errorMessage={errors[field.name]}
           />
         )
       })}
