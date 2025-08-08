@@ -1,0 +1,46 @@
+{
+  "login": {
+    "inputs": [
+      {
+        "type": "email",
+        "ariaLabel": "email",
+        "name": "email",
+        "placeholder": "email address"
+      },
+      {
+        "type": "password",
+        "ariaLabel": "password",
+        "name": "password",
+        "placeholder": "password"
+      }
+    ],
+    "submit": {
+      "text": "Login to your account"
+    }
+  },
+  "signUp": {
+    "inputs": [
+      {
+        "type": "email",
+        "ariaLabel": "email",
+        "name": "email",
+        "placeholder": "email address"
+      },
+      {
+        "type": "password",
+        "ariaLabel": "password",
+        "name": "password",
+        "placeholder": "password"
+      },
+      {
+        "type": "password",
+        "ariaLabel": "repeat password",
+        "name": "repeatPassword",
+        "placeholder": "repeat password"
+      }
+    ],
+    "submit": {
+      "text": "Create an account"
+    }
+  }
+}

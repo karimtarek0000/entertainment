@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  @apply font-outfit px-10;
+  @apply font-outfit px-5;
 }
 
 @theme {
@@ -31,9 +31,13 @@ body {
 
 /*  */
 @utility input {
-  @apply border-b w-full ps-2 caret-third border-[#485473] focus:outline-none focus:border-white h-[37px] leading-0;
+  @apply border-b placeholder:capitalize w-full ps-4 pb-5 text-head-sm caret-third border-[#485473] focus:outline-none focus:border-white h-[37px] leading-0;
 }
 
 @utility flex-center {
   @apply flex justify-center items-center;
+}
+
+@utility auth-heading {
+  @apply text-head-lg pb-10;
 }

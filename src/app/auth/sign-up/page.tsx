@@ -1,3 +1,17 @@
+import AuthForm from '@/components/molecules/AuthForm'
+import Link from 'next/link'
+
 export default function SignUp() {
-  return <h1 className="bg-primary text-para-md text-white p-2">Sign Up</h1>
+  return (
+    <>
+      <h1 className="auth-heading">Sign up</h1>
+      <AuthForm type="signUp" />
+      <div className="flex-center text-para-md space-x-2">
+        <p>Already have an account?</p>
+        <Link className="text-third" href="/auth">
+          Login
+        </Link>
+      </div>
+    </>
+  )
 }
