@@ -3,6 +3,7 @@
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 import AuthForm from '@/components/molecules/AuthForm'
+import AuthVerify from '@/components/molecules/AuthVerify'
 import { useSignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -10,11 +11,13 @@ import { useState } from 'react'
 
 export default function SignUp() {
   const { isLoaded, signUp } = useSignUp()
-  const router = useRouter()
   const [isLoading, setLoading] = useState(false)
+  const [isResending, setIsResending] = useState(false)
   const [pendingVerification, setPendingVerification] = useState(false)
   const [code, setCode] = useState('')
+  const router = useRouter()
 
+  // 1# Sign up
   const handleSignUp = async (data: SignUpData) => {
     if (!isLoaded || !signUp) return
 
@@ -36,6 +39,7 @@ export default function SignUp() {
     } catch (err: any) {}
   }
 
+  // 2# Handle email verification
   const handleVerifyEmail = async () => {
     if (!isLoaded || !signUp) return
 
@@ -50,32 +54,47 @@ export default function SignUp() {
     } catch (err: any) {}
   }
 
-  // Show verification form
+  // 3# Handle resend verification code
+  const handleResendCode = async () => {
+    if (!isLoaded || !signUp) return
+
+    try {
+      setIsResending(true)
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
+      setCode('')
+      console.log('Verification code resent successfully')
+    } catch (err: any) {
+    } finally {
+      setIsResending(false)
+    }
+  }
+
+  // 3# Render form or verification
   if (pendingVerification) {
     return (
-      <>
-        <h1 className="auth-heading">Verify your email</h1>
-        <p className="text-center mb-6">
-          We sent a verification code to your email address
-        </p>
+      <AuthVerify>
+        <Input
+          type="text"
+          value={code}
+          onChange={e => setCode(e.target.value)}
+          placeholder="Enter 6-digit code"
+          maxLength={6}
+        />
 
-        <div className="space-y-4">
-          <Input
-            type="text"
-            value={code}
-            onChange={e => setCode(e.target.value)}
-            placeholder="Enter 6-digit code"
-            maxLength={6}
-          />
+        <Button
+          onClick={handleVerifyEmail}
+          disabled={!code || code.length !== 6 || !/^\d+$/.test(code)}
+        >
+          Verify Email
+        </Button>
 
-          <Button
-            onClick={handleVerifyEmail}
-            disabled={!code || code.length !== 6 || !/^\d+$/.test(code)}
-          >
-            Verify Email
+        <div className="flex-center flex-col space-y-2 mt-4">
+          <p className="text-para-sm ">Didn't receive the code?</p>
+          <Button onClick={handleResendCode} disabled={isResending}>
+            {isResending ? 'Resending...' : 'Resend Code'}
           </Button>
         </div>
-      </>
+      </AuthVerify>
     )
   }
 

@@ -55,9 +55,9 @@ export default function AuthForm<T extends LoginData | SignUpData>({
       password: '',
     },
     signUp: {
-      email: '',
-      password: '',
-      repeatPassword: '',
+      email: 'arttract3@gmail.com',
+      password: 'karimKARIM@@12',
+      repeatPassword: 'karimKARIM@@12',
     },
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
