@@ -6,8 +6,10 @@ import authUI from '@/conifg/configDrivenUI.auth.json'
 import { ComponentProps, JSX, useState } from 'react'
 import z from 'zod'
 
-interface FormProps extends ComponentProps<'form'> {
+interface FormProps<T> extends ComponentProps<'form'> {
   type: 'login' | 'signUp'
+  isLoading?: boolean
+  submit: (data: T) => Promise<void>
 }
 
 // Start: Schema validation
@@ -41,7 +43,12 @@ const schemas = {
 }
 // End
 
-export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
+export default function AuthForm<T extends LoginData | SignUpData>({
+  type,
+  isLoading,
+  submit,
+  ...attrs
+}: FormProps<T>): JSX.Element {
   const [form, setForm] = useState({
     login: {
       email: '',
@@ -101,7 +108,7 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log(form[type])
+    submit(form[type] as T)
   }
 
   return (
@@ -125,8 +132,8 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
           />
         )
       })}
-      <Button disabled={!isFormValid()} type="submit">
-        {authUI[type].submit.text}
+      <Button disabled={!isFormValid() || isLoading} type="submit">
+        {isLoading ? 'Loading...' : authUI[type].submit.text}
       </Button>
     </form>
   )
