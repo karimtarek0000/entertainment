@@ -24,9 +24,9 @@ export default function AuthForm<T extends LoginData | SignUpData>({
       password: '',
     },
     signUp: {
-      email: 'arttract3@gmail.com',
-      password: 'karimKARIM@@12',
-      repeatPassword: 'karimKARIM@@12',
+      email: '',
+      password: '',
+      repeatPassword: '',
     },
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -76,7 +76,6 @@ export default function AuthForm<T extends LoginData | SignUpData>({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     submit(form[type] as T)
   }
 
@@ -86,7 +85,7 @@ export default function AuthForm<T extends LoginData | SignUpData>({
       onSubmit={handleSubmit}
       className="[&>input:not(:last-of-type)]:mb-6 [&>*:last-child]:mt-10 [&>*:last-child]:mb-6"
     >
-      {authUI[type].inputs.map((field: AuthFieldConfig) => {
+      {authUI[type].inputs.map((field: AuthFieldConfig, index: number) => {
         return (
           <Input
             key={field.name}
@@ -98,6 +97,7 @@ export default function AuthForm<T extends LoginData | SignUpData>({
             placeholder={field.placeholder}
             error={!!errors[field.name]}
             errorMessage={errors[field.name]}
+            autoFocus={index === 0}
           />
         )
       })}
