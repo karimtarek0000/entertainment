@@ -4,13 +4,14 @@ import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 import AuthForm from '@/components/molecules/AuthForm'
 import AuthVerify from '@/components/molecules/AuthVerify'
-import { useSignUp } from '@clerk/nextjs'
+import { useAuth, useSignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function SignUp() {
   const { isLoaded, signUp } = useSignUp()
+  const { signOut } = useAuth()
   const [isLoading, setLoading] = useState(false)
   const [isResending, setIsResending] = useState(false)
   const [pendingVerification, setPendingVerification] = useState(false)
@@ -24,19 +25,18 @@ export default function SignUp() {
     try {
       setLoading(true)
 
-      // 1# Create user account
       await signUp.create({
         emailAddress: data.email,
         password: data.password,
       })
 
-      // 2# Send verification email
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
-      setLoading(false)
-
-      // 3# Show verification form
       setPendingVerification(true)
-    } catch (err: any) {}
+    } catch (err: any) {
+      // Add error handling here
+    } finally {
+      setLoading(false) // Moved to finally block
+    }
   }
 
   // 2# Handle email verification
@@ -44,14 +44,15 @@ export default function SignUp() {
     if (!isLoaded || !signUp) return
 
     try {
-      // 1# Verify email with code
       const result = await signUp.attemptEmailAddressVerification({ code })
 
       if (result.status === 'complete') {
-        // Redirect to login after verification
+        await signOut()
         router.replace('/auth')
       }
-    } catch (err: any) {}
+    } catch (err: any) {
+      // Add error handling here
+    }
   }
 
   // 3# Handle resend verification code
@@ -62,14 +63,14 @@ export default function SignUp() {
       setIsResending(true)
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
       setCode('')
-      console.log('Verification code resent successfully')
     } catch (err: any) {
+      // Add error handling here
     } finally {
       setIsResending(false)
     }
   }
 
-  // 3# Render form or verification
+  // Render verification form
   if (pendingVerification) {
     return (
       <AuthVerify>
@@ -89,7 +90,7 @@ export default function SignUp() {
         </Button>
 
         <div className="flex-center flex-col space-y-2 mt-4">
-          <p className="text-para-sm ">Didn't receive the code?</p>
+          <p className="text-para-sm">Didn&apos;t receive the code?</p>
           <Button onClick={handleResendCode} disabled={isResending}>
             {isResending ? 'Resending...' : 'Resend Code'}
           </Button>
