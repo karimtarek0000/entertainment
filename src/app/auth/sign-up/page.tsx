@@ -4,12 +4,14 @@ import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 import AuthForm from '@/components/molecules/AuthForm'
 import AuthVerify from '@/components/molecules/AuthVerify'
+import { useCounterOTP } from '@/hooks/CounterOTP'
 import { useAuth, useSignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function SignUp() {
+  const { displayTime, isTimeOut, startTimer, clearTimer } = useCounterOTP()
   const { isLoaded, signUp } = useSignUp()
   const { signOut } = useAuth()
   const [isLoading, setLoading] = useState(false)
@@ -35,7 +37,8 @@ export default function SignUp() {
     } catch (err: any) {
       // Add error handling here
     } finally {
-      setLoading(false) // Moved to finally block
+      setLoading(false)
+      startTimer()
     }
   }
 
@@ -47,6 +50,7 @@ export default function SignUp() {
       const result = await signUp.attemptEmailAddressVerification({ code })
 
       if (result.status === 'complete') {
+        clearTimer()
         await signOut()
         router.replace('/auth')
       }
@@ -58,6 +62,8 @@ export default function SignUp() {
   // 3# Handle resend verification code
   const handleResendCode = async () => {
     if (!isLoaded || !signUp) return
+
+    startTimer()
 
     try {
       setIsResending(true)
@@ -82,6 +88,8 @@ export default function SignUp() {
           maxLength={6}
         />
 
+        <figure className="text-center min-h-6">{displayTime}</figure>
+
         <Button
           onClick={handleVerifyEmail}
           disabled={!code || code.length !== 6 || !/^\d+$/.test(code)}
@@ -91,7 +99,10 @@ export default function SignUp() {
 
         <div className="flex-center flex-col space-y-2 mt-4">
           <p className="text-para-sm">Didn&apos;t receive the code?</p>
-          <Button onClick={handleResendCode} disabled={isResending}>
+          <Button
+            onClick={handleResendCode}
+            disabled={isResending || !isTimeOut}
+          >
             {isResending ? 'Resending...' : 'Resend Code'}
           </Button>
         </div>
