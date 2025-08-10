@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  @apply font-outfit px-5;
+  @apply font-outfit;
 }
 
 @theme {
@@ -35,6 +35,10 @@ body {
 /*  */
 @utility input {
   @apply border-b placeholder:capitalize w-full ps-4 pb-5 text-head-sm caret-third border-[#485473] focus:outline-none focus:border-white h-[37px] leading-0;
+}
+
+@utility header {
+  @apply flex items-center lg:flex-col p-4 bg-secondary justify-between lg:rounded-lg;
 }
 
 @utility flex-center {
