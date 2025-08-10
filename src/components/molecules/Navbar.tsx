@@ -31,7 +31,7 @@ export default function Navbar() {
   const pathname = usePathname()
 
   return (
-    <nav>
+    <nav className="lg:mb-auto lg:mt-16">
       <ul className="flex-center flex-row lg:flex-col gap-6">
         {items.map(item => {
           const isActive = pathname === item.href
