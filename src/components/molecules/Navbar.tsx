@@ -40,7 +40,7 @@ export default function Navbar() {
               <Link href={item.href}>
                 <RenderSVG
                   name={item.icon}
-                  className={`size-7 ${
+                  className={`size-6 ${
                     isActive ? 'fill-white' : 'fill-fourth'
                   }`}
                 />
