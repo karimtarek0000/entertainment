@@ -37,7 +37,7 @@ export default function Navbar() {
           const isActive = pathname === item.href
 
           return (
-            <li key={item.name} role="button" aria-label={item.name}>
+            <li key={item.name} aria-label={item.name}>
               <Link href={item.href}>
                 <RenderSVG
                   name={item.icon}
