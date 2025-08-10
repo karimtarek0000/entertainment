@@ -3,45 +3,21 @@
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 import authUI from '@/conifg/configDrivenUI.auth.json'
+import { schemas } from '@/validations/auth.schema'
 import { ComponentProps, JSX, useState } from 'react'
-import z from 'zod'
 
-interface FormProps extends ComponentProps<'form'> {
+interface FormProps<T> extends ComponentProps<'form'> {
   type: 'login' | 'signUp'
+  isLoading?: boolean
+  submit: (data: T) => Promise<void>
 }
 
-// Start: Schema validation
-const schemas = {
-  login: z.object({
-    email: z
-      .string()
-      .min(1, 'Email is required')
-      .email('Invalid email address'),
-    password: z.string().min(8, 'Password is required'),
-  }),
-  signUp: z
-    .object({
-      email: z
-        .string()
-        .min(1, 'Email is required')
-        .email('Invalid email address'),
-      password: z
-        .string()
-        .min(1, 'Password is required')
-        .regex(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          'Password must be at least 8 characters with uppercase, lowercase, number, and special character',
-        ),
-      repeatPassword: z.string().min(1, 'Please confirm your password'),
-    })
-    .refine(data => data.password === data.repeatPassword, {
-      message: "Passwords don't match",
-      path: ['repeatPassword'],
-    }),
-}
-// End
-
-export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
+export default function AuthForm<T extends LoginData | SignUpData>({
+  type,
+  isLoading,
+  submit,
+  ...attrs
+}: FormProps<T>): JSX.Element {
   const [form, setForm] = useState({
     login: {
       email: '',
@@ -100,8 +76,7 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    console.log(form[type])
+    submit(form[type] as T)
   }
 
   return (
@@ -110,7 +85,7 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
       onSubmit={handleSubmit}
       className="[&>input:not(:last-of-type)]:mb-6 [&>*:last-child]:mt-10 [&>*:last-child]:mb-6"
     >
-      {authUI[type].inputs.map((field: AuthFieldConfig) => {
+      {authUI[type].inputs.map((field: AuthFieldConfig, index: number) => {
         return (
           <Input
             key={field.name}
@@ -122,11 +97,12 @@ export default function AuthForm({ type, ...attrs }: FormProps): JSX.Element {
             placeholder={field.placeholder}
             error={!!errors[field.name]}
             errorMessage={errors[field.name]}
+            autoFocus={index === 0}
           />
         )
       })}
-      <Button disabled={!isFormValid()} type="submit">
-        {authUI[type].submit.text}
+      <Button disabled={!isFormValid() || isLoading} type="submit">
+        {isLoading ? 'Loading...' : authUI[type].submit.text}
       </Button>
     </form>
   )

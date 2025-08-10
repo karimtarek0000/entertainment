@@ -39,5 +39,5 @@ body {
 }
 
 @utility auth-heading {
-  @apply text-head-lg pb-10;
+  @apply text-head-lg pb-10 text-center;
 }
