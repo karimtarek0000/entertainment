@@ -1,6 +1,7 @@
 import { useSignIn } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import Dashboard from '../app/dashboard/page'
 
 export const useLogin = () => {
   const { signIn, setActive, isLoaded } = useSignIn()
@@ -20,7 +21,7 @@ export const useLogin = () => {
 
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId })
-        router.push('/')
+        router.push('/dashboard')
       }
     } catch (err: any) {
       // console.error('Login error:', err)
