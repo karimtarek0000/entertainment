@@ -27,6 +27,9 @@ body {
   --text-head-sm: 1.125rem;
   --text-para-md: 0.9375rem;
   --text-para-sm: 0.8125rem;
+
+  /* Breakpoints */
+  --breakpoint-lg: 1440px;
 }
 
 /*  */
