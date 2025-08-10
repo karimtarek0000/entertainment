@@ -18,7 +18,7 @@ export default function Search() {
     <form className="mt-6 flex items-end space-x-1 ps-4 max-h-8">
       <RenderSVG name="search" className="mb-3" />
       <Input
-        className="border-transparent"
+        className="border-transparent focus:border-transparent"
         aria-label={`Search for ${placeHolders[pathname]}`}
         placeholder={`Search for ${placeHolders[pathname]}`}
       />
