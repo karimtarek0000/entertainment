@@ -35,6 +35,7 @@ export default function Navbar() {
       <ul className="flex-center flex-row lg:flex-col gap-6">
         {items.map(item => {
           const isActive = pathname === item.href
+
           return (
             <li key={item.name} role="button" aria-label={item.name}>
               <Link href={item.href}>

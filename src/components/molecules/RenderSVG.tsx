@@ -15,7 +15,7 @@ function RenderSVG({
 }: RenderSVGTypes): JSX.Element {
   return (
     <svg className={className} width={size} height={size} style={style}>
-      <use xlinkHref={`icons/sprite.svg#${name}`}>
+      <use xlinkHref={`/icons/sprite.svg#${name}`}>
         <title>{name}</title>
       </use>
     </svg>
