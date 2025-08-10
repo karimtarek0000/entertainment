@@ -4,77 +4,22 @@ import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 import AuthForm from '@/components/molecules/AuthForm'
 import AuthVerify from '@/components/molecules/AuthVerify'
-import { useCounterOTP } from '@/hooks/CounterOTP'
-import { useAuth, useSignUp } from '@clerk/nextjs'
+import { useSignup } from '@/hooks/SignUp'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 export default function SignUp() {
-  const { displayTime, isTimeOut, startTimer, clearTimer } = useCounterOTP()
-  const { isLoaded, signUp } = useSignUp()
-  const { signOut } = useAuth()
-  const [isLoading, setLoading] = useState(false)
-  const [isResending, setIsResending] = useState(false)
-  const [pendingVerification, setPendingVerification] = useState(false)
-  const [code, setCode] = useState('')
-  const router = useRouter()
-
-  // 1# Sign up
-  const handleSignUp = async (data: SignUpData) => {
-    if (!isLoaded || !signUp) return
-
-    try {
-      setLoading(true)
-
-      await signUp.create({
-        emailAddress: data.email,
-        password: data.password,
-      })
-
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
-      setPendingVerification(true)
-    } catch (err: any) {
-      // Add error handling here
-    } finally {
-      setLoading(false)
-      startTimer()
-    }
-  }
-
-  // 2# Handle email verification
-  const handleVerifyEmail = async () => {
-    if (!isLoaded || !signUp) return
-
-    try {
-      const result = await signUp.attemptEmailAddressVerification({ code })
-
-      if (result.status === 'complete') {
-        clearTimer()
-        await signOut()
-        router.replace('/auth')
-      }
-    } catch (err: any) {
-      // Add error handling here
-    }
-  }
-
-  // 3# Handle resend verification code
-  const handleResendCode = async () => {
-    if (!isLoaded || !signUp) return
-
-    startTimer()
-
-    try {
-      setIsResending(true)
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
-      setCode('')
-    } catch (err: any) {
-      // Add error handling here
-    } finally {
-      setIsResending(false)
-    }
-  }
+  const {
+    pendingVerification,
+    isLoading,
+    isResending,
+    isTimeOut,
+    displayTime,
+    code,
+    handleSignUp,
+    handleResendCode,
+    handleVerifyEmail,
+    setCode,
+  } = useSignup()
 
   // Render verification form
   if (pendingVerification) {
