@@ -46,7 +46,7 @@ body {
 
 /* Card */
 @utility card-wrapper {
-  @apply w-[10.25rem] md:w-[13.75rem] lg:w-[17.5rem] capitalize;
+  @apply grid gap-4 grid-cols-2 md:grid-cols-[repeat(auto-fit,13.75rem)] lg:grid-cols-[repeat(auto-fit,17.5rem)] capitalize;
 }
 
 @utility card {
@@ -59,4 +59,8 @@ body {
 
 @utility auth-heading {
   @apply text-head-lg pb-10 text-center;
+}
+
+@utility container {
+  @apply max-w-full px-4;
 }
