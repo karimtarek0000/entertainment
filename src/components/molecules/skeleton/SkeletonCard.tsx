@@ -1,6 +1,6 @@
 export default function SkeletonCard({ count }: { count: number }) {
   const skeleton = Array.from({ length: count }).map((_, index) => (
-    <div key={index} className="card-wrapper animate-pulse">
+    <div key={index} className="animate-pulse">
       <div className="card overflow-hidden relative bg-gray-800 rounded-lg h-32 md:h-40">
         {/* Bookmark button skeleton */}
         <div className="absolute top-2 right-2 z-40 w-8 h-8 bg-gray-700 rounded-full"></div>
