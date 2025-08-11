@@ -14,7 +14,7 @@ const variants: Record<Variants, string> = {
   primary:
     'bg-third disabled:pointer-events-none disabled:opacity-50 text-para-md hover:bg-white hover:text-black rounded-md h-[3rem] w-full',
   secondary:
-    'w-8 h-8 flex-center rounded-full bg-[#7E8185] absolute top-2 end-2',
+    'size-8 flex-center rounded-full bg-[#7E8185] absolute top-2 end-2',
 }
 
 export default function Button({
