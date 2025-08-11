@@ -29,43 +29,6 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
     const [isLoading, setIsLoading] = useState(false)
     const playerRef = useRef<any>(null)
 
-    useEffect(() => {
-      // Add global CSS to hide YouTube elements
-      const style = document.createElement('style')
-      style.id = 'youtube-hide-elements'
-      style.textContent = `
-      iframe[src*="youtube.com"] {
-        pointer-events: none !important;
-      }
-      .ytp-pause-overlay,
-      .ytp-scroll-min,
-      .ytp-videowall-still,
-      .ytp-endscreen-content,
-      .ytp-ce-element,
-      .ytp-cards-teaser,
-      .ytp-endscreen-element,
-      .ytp-chrome-top,
-      .ytp-chrome-bottom,
-      .ytp-gradient-top,
-      .ytp-gradient-bottom {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-    `
-
-      if (!document.getElementById('youtube-hide-elements')) {
-        document.head.appendChild(style)
-      }
-
-      return () => {
-        const existingStyle = document.getElementById('youtube-hide-elements')
-        if (existingStyle) {
-          document.head.removeChild(existingStyle)
-        }
-      }
-    }, [])
-
     // Extract video ID from YouTube URL
     const getVideoId = (url: string): string => {
       const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/
@@ -91,6 +54,10 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
         cc_load_policy: 0,
         playsinline: 1,
         enablejsapi: 1,
+        start: 0,
+        end: 9999999,
+        loop: 0,
+        playlist: videoId,
       },
     }
 
@@ -121,7 +88,6 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
     const onReady = (event: any) => {
       playerRef.current = event.target
       setIsReady(true)
-      // Wait a moment for the video to start playing before hiding loading
       setTimeout(() => {
         setVideoLoaded(true)
         setIsLoading(false)
@@ -132,7 +98,6 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
     const onStateChange = (event: any) => {
       setIsPlaying(event.data === 1)
       if (event.data === 1) {
-        // Video is playing, ensure background is hidden
         setVideoLoaded(true)
         setIsLoading(false)
       }
@@ -148,8 +113,13 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
           width: '800px',
           height: '450px',
           position: 'relative',
-          backgroundImage: !shouldLoad || isLoading ? 'url(/test.jpg)' : 'none',
-          backgroundColor: videoLoaded && !isLoading ? 'black' : 'transparent',
+          // Show image when not loaded, loading, or paused
+          backgroundImage:
+            !shouldLoad || isLoading || (!isPlaying && videoLoaded)
+              ? 'url(/test.jpg)'
+              : 'none',
+          backgroundColor:
+            isPlaying && videoLoaded && !isLoading ? 'black' : 'transparent',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -158,18 +128,31 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
       >
         {shouldLoad ? (
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-            <YouTube
-              videoId={videoId}
-              opts={opts}
-              onReady={onReady}
-              onStateChange={onStateChange}
-              onError={error => console.error('YouTube Player Error:', error)}
+            {/* YouTube Player - hidden when paused */}
+            <div
               style={{
-                pointerEvents: 'none',
-                opacity: videoLoaded && !isLoading ? 1 : 0,
-                transition: 'opacity 0.3s ease-in-out',
+                opacity: isPlaying ? 1 : 0,
+                transition: 'opacity 0.2s ease-in-out',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
               }}
-            />
+            >
+              <YouTube
+                videoId={videoId}
+                opts={opts}
+                onReady={onReady}
+                onStateChange={onStateChange}
+                onError={error => console.error('YouTube Player Error:', error)}
+                style={{
+                  pointerEvents: 'none',
+                  width: '100%',
+                  height: '100%',
+                }}
+              />
+            </div>
 
             {/* Loading overlay */}
             {isLoading && (
@@ -193,14 +176,34 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
               </div>
             )}
 
-            {/* Complete overlay to block all YouTube interactions */}
+            {/* Paused state - show image with overlay text */}
+            {!isPlaying && videoLoaded && !isLoading && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '24px',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                  zIndex: 1001,
+                }}
+              >
+                Video Paused
+              </div>
+            )}
+
+            {/* Complete interaction blocker */}
             <div
               style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
-                right: 0,
-                bottom: 0,
                 width: '100%',
                 height: '100%',
                 backgroundColor: 'transparent',
@@ -212,6 +215,7 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
               onMouseDown={e => e.preventDefault()}
               onMouseUp={e => e.preventDefault()}
               onClick={e => e.preventDefault()}
+              onDoubleClick={e => e.preventDefault()}
             />
           </div>
         ) : (
