@@ -2,6 +2,7 @@
 
 import Button from '@/components/atoms/Button'
 import RenderSVG from '@/components/molecules/RenderSVG'
+import Image from 'next/image'
 
 interface CardProps {
   type: 'Movie' | 'TV Series'
@@ -15,16 +16,17 @@ const icons = {
 export default function Card({ type }: CardProps) {
   return (
     <div className="card-wrapper">
-      <div className="card">
-        <Button variant="secondary">
+      <div className="card overflow-hidden">
+        <Button variant="secondary" className="z-40">
           <RenderSVG
             name="unactive-bookmark"
             className="fill-transparent size-4"
           />
         </Button>
+        <Image src="/test.jpg" alt="Test Image" fill className="object-cover" />
       </div>
-      <div className="mt-2 capitalize">
-        <figure className="flex items-center gap-x-1 text-fifth text-[11px]">
+      <div className="mt-2">
+        <figure className="flex items-center gap-x-1 text-fifth text-[11px] md:text-para-sm">
           2019 ·{' '}
           <RenderSVG name={icons[type]} className="fill-fifth size-2.5" />{' '}
           {type} · e
