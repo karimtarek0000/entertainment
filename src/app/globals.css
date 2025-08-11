@@ -46,11 +46,11 @@ body {
 
 /* Card */
 @utility card-wrapper {
-  @apply w-[200px] md:w-[220px] lg:w-[280px];
+  @apply w-[10.25rem] md:w-[13.75rem] lg:w-[17.5rem] capitalize;
 }
 
 @utility card {
-  @apply relative rounded-lg w-full h-[110px] md:h-[140px] lg:h-[174px] bg-red-600;
+  @apply relative rounded-lg w-full h-[110px] md:h-[8.75rem] lg:h-[10.875rem];
 }
 
 @utility flex-center {
