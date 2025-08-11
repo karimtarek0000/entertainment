@@ -25,6 +25,8 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
     const [isPlaying, setIsPlaying] = useState(false)
     const [isReady, setIsReady] = useState(false)
     const [shouldLoad, setShouldLoad] = useState(false)
+    const [videoLoaded, setVideoLoaded] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const playerRef = useRef<any>(null)
 
     useEffect(() => {
@@ -89,12 +91,12 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
         cc_load_policy: 0,
         playsinline: 1,
         enablejsapi: 1,
-        // Remove the window.location.origin reference
       },
     }
 
     const handlePlay = () => {
       if (!shouldLoad) {
+        setIsLoading(true)
         setShouldLoad(true)
       } else if (playerRef.current && isReady) {
         playerRef.current.playVideo()
@@ -119,11 +121,21 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
     const onReady = (event: any) => {
       playerRef.current = event.target
       setIsReady(true)
-      setIsPlaying(true)
+      // Wait a moment for the video to start playing before hiding loading
+      setTimeout(() => {
+        setVideoLoaded(true)
+        setIsLoading(false)
+        setIsPlaying(true)
+      }, 500)
     }
 
     const onStateChange = (event: any) => {
       setIsPlaying(event.data === 1)
+      if (event.data === 1) {
+        // Video is playing, ensure background is hidden
+        setVideoLoaded(true)
+        setIsLoading(false)
+      }
     }
 
     if (!videoId) {
@@ -136,7 +148,11 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
           width: '800px',
           height: '450px',
           position: 'relative',
-          backgroundColor: 'black',
+          backgroundImage: !shouldLoad || isLoading ? 'url(/test.jpg)' : 'none',
+          backgroundColor: videoLoaded && !isLoading ? 'black' : 'transparent',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
           overflow: 'hidden',
         }}
       >
@@ -148,8 +164,34 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
               onReady={onReady}
               onStateChange={onStateChange}
               onError={error => console.error('YouTube Player Error:', error)}
-              style={{ pointerEvents: 'none' }}
+              style={{
+                pointerEvents: 'none',
+                opacity: videoLoaded && !isLoading ? 1 : 0,
+                transition: 'opacity 0.3s ease-in-out',
+              }}
             />
+
+            {/* Loading overlay */}
+            {isLoading && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '18px',
+                  zIndex: 1000,
+                }}
+              >
+                Loading video...
+              </div>
+            )}
 
             {/* Complete overlay to block all YouTube interactions */}
             <div
@@ -162,7 +204,7 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
                 width: '100%',
                 height: '100%',
                 backgroundColor: 'transparent',
-                zIndex: 2147483647, // Maximum z-index
+                zIndex: 2147483647,
                 pointerEvents: 'auto',
                 cursor: 'default',
               }}
@@ -177,11 +219,12 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
             style={{
               width: '100%',
               height: '100%',
-              backgroundColor: 'black',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
+              fontSize: '18px',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
             }}
           >
             Video ready to play
