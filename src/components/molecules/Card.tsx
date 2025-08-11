@@ -2,9 +2,9 @@
 
 import Button from '@/components/atoms/Button'
 import RenderSVG from '@/components/molecules/RenderSVG'
-import Image from 'next/image'
+import { PropsWithChildren } from 'react'
 
-interface CardProps {
+interface CardProps extends PropsWithChildren {
   type: 'Movie' | 'TV Series'
 }
 
@@ -13,7 +13,7 @@ const icons = {
   'TV Series': 'series',
 }
 
-export default function Card({ type }: CardProps) {
+export default function Card({ type, children }: CardProps) {
   return (
     <div>
       <div className="card overflow-hidden">
@@ -23,7 +23,7 @@ export default function Card({ type }: CardProps) {
             className="fill-transparent size-4"
           />
         </Button>
-        <Image src="/test.jpg" alt="Test Image" fill className="object-cover" />
+        {children}
       </div>
       <div className="mt-2">
         <figure className="flex items-center gap-x-1 text-fifth text-[11px] md:text-para-sm">
