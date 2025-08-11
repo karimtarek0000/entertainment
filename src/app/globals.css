@@ -41,6 +41,10 @@ body {
   @apply flex items-center lg:flex-col p-4 lg:h-[60rem] bg-secondary justify-between lg:rounded-lg;
 }
 
+@utility card {
+  @apply relative rounded-lg w-[164px] h-[110px] md:w-[220px] md:h-[140px] lg:w-[280px] lg:h-[174px];
+}
+
 @utility flex-center {
   @apply flex justify-center items-center;
 }
