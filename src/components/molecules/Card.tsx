@@ -15,7 +15,7 @@ const icons = {
 
 export default function Card({ type }: CardProps) {
   return (
-    <div className="card-wrapper">
+    <div>
       <div className="card overflow-hidden">
         <Button variant="secondary" className="z-40">
           <RenderSVG
