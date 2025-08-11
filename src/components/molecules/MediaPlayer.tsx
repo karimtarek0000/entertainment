@@ -5,8 +5,6 @@ import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube'
 
 interface YouTubePlayerProps {
   url: string
-  width?: number
-  height?: number
 }
 
 export interface YouTubePlayerRef {
@@ -35,7 +33,7 @@ const PLAYER_STATES: YouTubePlayerState = {
 }
 
 const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
-  ({ url, width = 800, height = 450 }, ref) => {
+  ({ url }, ref) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
     const [isReady, setIsReady] = useState<boolean>(false)
     const [shouldLoad, setShouldLoad] = useState<boolean>(false)
@@ -51,8 +49,8 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
     const videoId = getVideoId(url)
 
     const opts: YouTubeProps['opts'] = {
-      height: height.toString(),
-      width: width.toString(),
+      height: '100%',
+      width: '100%',
       playerVars: {
         autoplay: 1,
         controls: 0,
@@ -107,8 +105,8 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
     return (
       <div
         style={{
-          width: `${width}px`,
-          height: `${height}px`,
+          height: '100%',
+          width: '100%',
           position: 'relative',
           backgroundImage: isPlaying ? 'none' : 'url(/test.jpg)',
           backgroundSize: 'cover',
