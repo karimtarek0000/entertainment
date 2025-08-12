@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  @apply font-outfit px-5;
+  @apply font-outfit;
 }
 
 @theme {
@@ -14,6 +14,7 @@ body {
   --color-secondary: #161d2f;
   --color-third: #fc4747;
   --color-fourth: #5a698f;
+  --color-fifth: #c3c4c7;
 
   /* Font */
   --font-outfit: --font-outfit;
@@ -25,13 +26,58 @@ body {
   --text-head-lg: 2rem;
   --text-head-md: 1.5rem;
   --text-head-sm: 1.125rem;
+  --text-head-xs: 0.9375rem;
   --text-para-md: 0.9375rem;
   --text-para-sm: 0.8125rem;
+
+  /* Breakpoints */
+  --breakpoint-lg: 90rem;
 }
 
 /*  */
 @utility input {
-  @apply border-b placeholder:capitalize w-full ps-4 pb-5 text-head-sm caret-third border-[#485473] focus:outline-none focus:border-white h-[37px] leading-0;
+  @apply border-b placeholder:capitalize w-full ps-4 pb-5 text-head-sm caret-third border-[#485473] 
+  focus:outline-none focus:border-white h-[37px] leading-0;
+}
+
+@utility header {
+  @apply flex items-center lg:flex-col p-4 lg:h-[60rem] bg-secondary justify-between lg:rounded-lg;
+}
+
+/* Card */
+@utility card-wrapper {
+  @apply grid gap-4 grid-cols-2 md:grid-cols-[repeat(auto-fit,13.75rem)] lg:grid-cols-[repeat(auto-fit,17.5rem)] capitalize;
+}
+
+@utility card-wrapper__actions {
+  @apply bg-black/50 absolute inset-0 flex-center opacity-0 transition-opacity duration-300;
+}
+
+/* Safari-compatible version */
+/* For hover-capable devices (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  .card-wrapper__actions {
+    @apply group-hover/card:opacity-100;
+  }
+}
+
+/* For touch devices (mobile/tablet) */
+@media (hover: none) {
+  .card-wrapper__actions {
+    @apply opacity-100;
+  }
+
+  .card-wrapper__actions:focus-within {
+    @apply opacity-0;
+  }
+
+  .card-wrapper__actions:active {
+    @apply opacity-100;
+  }
+}
+
+@utility card {
+  @apply relative flex-center overflow-hidden rounded-lg w-full h-[110px] md:h-[8.75rem] lg:h-[10.875rem];
 }
 
 @utility flex-center {
@@ -40,4 +86,8 @@ body {
 
 @utility auth-heading {
   @apply text-head-lg pb-10 text-center;
+}
+
+@utility container {
+  @apply max-w-full px-4;
 }

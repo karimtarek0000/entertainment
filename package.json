@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.29.0",
+    "@headlessui/react": "^2.2.7",
     "next": "15.4.5",
     "postcss": "^8.5.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-youtube": "^10.1.0",
     "zod": "^4.0.15"
   },
   "devDependencies": {

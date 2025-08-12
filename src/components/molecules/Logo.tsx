@@ -8,6 +8,7 @@ export default function Logo() {
       width={32}
       height={25}
       style={{ width: '32px', height: '25px' }}
+      aria-label="entertainment logo"
     />
   )
 }
