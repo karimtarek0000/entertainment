@@ -5,6 +5,7 @@ import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube'
 
 interface YouTubePlayerProps {
   url: string
+  imageURL: string
 }
 
 export interface YouTubePlayerRef {
@@ -33,7 +34,7 @@ const PLAYER_STATES: YouTubePlayerState = {
 }
 
 const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
-  ({ url }, ref) => {
+  ({ url, imageURL }, ref) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
     const [isReady, setIsReady] = useState<boolean>(false)
     const [shouldLoad, setShouldLoad] = useState<boolean>(false)
@@ -108,7 +109,7 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
           height: '100%',
           width: '100%',
           position: 'relative',
-          backgroundImage: isPlaying ? 'none' : 'url(/test.jpg)',
+          backgroundImage: isPlaying ? 'none' : `url(${imageURL})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           overflow: 'hidden',
