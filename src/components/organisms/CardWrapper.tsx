@@ -6,15 +6,18 @@ import YouTubePlayer, {
   YouTubePlayerRef,
 } from '@/components/molecules/MediaPlayer'
 import RenderSVG from '@/components/molecules/RenderSVG'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 export default function CardWrapper() {
   const playerRef = useRef<YouTubePlayerRef>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const handleToggleVideo = () => {
     if (playerRef.current?.isPlaying) {
+      setIsPlaying(false)
       playerRef.current?.pause()
     } else {
+      setIsPlaying(true)
       playerRef.current?.play()
     }
   }
@@ -32,8 +35,8 @@ export default function CardWrapper() {
             variant="third"
             className="group-hover/card:opacity-100"
           >
-            <RenderSVG name="play" className="size-8" />
-            Play
+            <RenderSVG name={isPlaying ? 'pause' : 'play'} className="size-8" />
+            {isPlaying ? 'Pause' : 'Play'}
           </Button>
         </Card>
 
