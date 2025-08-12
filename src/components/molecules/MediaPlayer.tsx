@@ -125,6 +125,7 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
               style={{
                 opacity: isPlaying ? 1 : 0,
                 pointerEvents: 'none',
+                height: '100%',
               }}
             />
 
