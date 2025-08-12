@@ -9,12 +9,12 @@ interface ButtonProps extends PropsWithChildren, ComponentProps<'button'> {
 
 // Classes
 const globalClasses =
-  'text-center flex-center duration-150 cursor-pointer text-white transition-colors'
+  'text-center group flex-center duration-150 cursor-pointer text-white transition-colors'
 const variants: Record<Variants, string> = {
   primary:
     'bg-third disabled:pointer-events-none disabled:opacity-50 text-para-md hover:bg-white hover:text-black rounded-md h-[3rem] w-full',
   secondary:
-    'size-8 flex-center rounded-full bg-[#7E8185] absolute top-2 end-2',
+    'size-8 flex-center hover:bg-white [&>svg]:group-hover:invert rounded-full bg-[#7E8185] absolute top-2 end-2',
 }
 
 export default function Button({
