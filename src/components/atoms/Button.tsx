@@ -1,7 +1,7 @@
 import twMerge from '@/utils/twMerge'
 import { ComponentProps, PropsWithChildren } from 'react'
 
-type Variants = 'primary' | 'secondary'
+type Variants = 'primary' | 'secondary' | 'third'
 
 interface ButtonProps extends PropsWithChildren, ComponentProps<'button'> {
   variant?: Variants
@@ -15,6 +15,8 @@ const variants: Record<Variants, string> = {
     'bg-third disabled:pointer-events-none disabled:opacity-50 text-para-md hover:bg-white hover:text-black rounded-md h-[3rem] w-full',
   secondary:
     'size-8 flex-center hover:bg-white [&>svg]:group-hover:invert rounded-full bg-[#7E8185] absolute top-2 end-2',
+  third:
+    'absolute w-[117px] h-[48px] opacity-0 justify-between ps-2 pe-6 text-head-sm bg-white/30 font-medium rounded-full',
 }
 
 export default function Button({
