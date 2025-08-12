@@ -135,7 +135,6 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
                 left: 0,
                 width: '100%',
                 height: '100%',
-                zIndex: 999,
                 pointerEvents: 'auto',
               }}
               onClick={(e: React.MouseEvent<HTMLDivElement>) =>
