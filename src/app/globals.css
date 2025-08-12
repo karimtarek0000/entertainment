@@ -49,6 +49,33 @@ body {
   @apply grid gap-4 grid-cols-2 md:grid-cols-[repeat(auto-fit,13.75rem)] lg:grid-cols-[repeat(auto-fit,17.5rem)] capitalize;
 }
 
+@utility card-wrapper__actions {
+  @apply bg-black/50 absolute inset-0 flex-center opacity-0 transition-opacity duration-300;
+}
+
+/* Safari-compatible version */
+/* For hover-capable devices (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  .card-wrapper__actions {
+    @apply group-hover/card:opacity-100;
+  }
+}
+
+/* For touch devices (mobile/tablet) */
+@media (hover: none) {
+  .card-wrapper__actions {
+    @apply opacity-100;
+  }
+
+  .card-wrapper__actions:focus-within {
+    @apply opacity-0;
+  }
+
+  .card-wrapper__actions:active {
+    @apply opacity-100;
+  }
+}
+
 @utility card {
   @apply relative flex-center overflow-hidden rounded-lg w-full h-[110px] md:h-[8.75rem] lg:h-[10.875rem];
 }
