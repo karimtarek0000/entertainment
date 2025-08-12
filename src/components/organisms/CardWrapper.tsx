@@ -30,13 +30,7 @@ export default function CardWrapper() {
           url="https://www.youtube.com/watch?v=Way9Dexny3w"
           imageURL="/test.jpg"
         />
-        <div
-          className="bg-black/50 absolute inset-0 flex-center in-hover:opacity-0 
-          in-hover:group-hover/card:opacity-100
-          not-hover:focus-within:opacity-0
-          not-hover:not-focus-within:opacity-100
-          not-hover:active:opacity-100"
-        >
+        <div className="card-wrapper__actions">
           <Button onClick={handleToggleVideo} variant="third" className="">
             <RenderSVG name={isPlaying ? 'pause' : 'play'} className="size-8" />
             {isPlaying ? 'Pause' : 'Play'}
