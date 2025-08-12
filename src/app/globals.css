@@ -50,7 +50,7 @@ body {
 }
 
 @utility card {
-  @apply relative rounded-lg w-full h-[110px] md:h-[8.75rem] lg:h-[10.875rem];
+  @apply relative flex-center overflow-hidden rounded-lg w-full h-[110px] md:h-[8.75rem] lg:h-[10.875rem];
 }
 
 @utility flex-center {
