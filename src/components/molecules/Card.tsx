@@ -16,7 +16,7 @@ const icons = {
 export default function Card({ type, children }: CardProps) {
   return (
     <div>
-      <div className="card overflow-hidden">
+      <div className="card group/card">
         <Button variant="secondary" className="z-40">
           <RenderSVG
             name="unactive-bookmark"
