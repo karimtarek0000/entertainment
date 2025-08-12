@@ -23,25 +23,22 @@ export default function CardWrapper() {
   }
 
   return (
-    <>
-      <div className="card-wrapper">
-        <Card type="Movie">
-          <YouTubePlayer
-            ref={playerRef}
-            url="https://www.youtube.com/watch?v=Way9Dexny3w"
-          />
-          <Button
-            onClick={handleToggleVideo}
-            variant="third"
-            className="group-hover/card:opacity-100"
-          >
+    <div className="card-wrapper">
+      <Card type="Movie">
+        <YouTubePlayer
+          ref={playerRef}
+          url="https://www.youtube.com/watch?v=Way9Dexny3w"
+          imageURL="/test.jpg"
+        />
+        <div className="bg-black/50 absolute inset-0 flex-center opacity-0 group-hover/card:opacity-100">
+          <Button onClick={handleToggleVideo} variant="third" className="">
             <RenderSVG name={isPlaying ? 'pause' : 'play'} className="size-8" />
             {isPlaying ? 'Pause' : 'Play'}
           </Button>
-        </Card>
+        </div>
+      </Card>
 
-        {/* <SkeletonCard count={4} /> */}
-      </div>
-    </>
+      {/* <SkeletonCard count={4} /> */}
+    </div>
   )
 }
