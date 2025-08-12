@@ -16,7 +16,7 @@ const variants: Record<Variants, string> = {
   secondary:
     'size-8 flex-center hover:bg-white [&>svg]:group-hover:invert rounded-full bg-[#7E8185] absolute top-2 end-2',
   third:
-    'absolute w-[117px] h-[48px] opacity-0 justify-between ps-2 pe-6 text-head-sm bg-white/30 font-medium rounded-full',
+    'absolute w-[7.3125rem] h-[3rem] justify-between ps-2 pe-6 text-head-sm bg-white/30 font-medium rounded-full',
 }
 
 export default function Button({
