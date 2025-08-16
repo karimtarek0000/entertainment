@@ -22,5 +22,5 @@ export default function SkeletonCard({ count }: { count: number }) {
     </div>
   ))
 
-  return <>{skeleton}</>
+  return <div className="card-wrapper">{skeleton}</div>
 }
