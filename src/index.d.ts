@@ -14,6 +14,19 @@ declare global {
   interface SignUpData extends LoginData {
     repeatPassword: string
   }
+
+  interface CardData {
+    title: string
+    year: number
+    rating: string
+    type: 'Movie' | 'TV Series'
+  }
+
+  interface CardWrapperData extends CardData {
+    id: string
+    trailer: string
+    thumbnail: string
+  }
 }
 
 export {}

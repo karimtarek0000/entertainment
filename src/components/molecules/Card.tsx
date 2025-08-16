@@ -5,7 +5,7 @@ import RenderSVG from '@/components/molecules/RenderSVG'
 import { PropsWithChildren } from 'react'
 
 interface CardProps extends PropsWithChildren {
-  type: 'Movie' | 'TV Series'
+  data: CardData
 }
 
 const icons = {
@@ -13,7 +13,7 @@ const icons = {
   'TV Series': 'series',
 }
 
-export default function Card({ type, children }: CardProps) {
+export default function Card({ data, children }: CardProps) {
   return (
     <div>
       <div className="card group/card">
@@ -27,12 +27,12 @@ export default function Card({ type, children }: CardProps) {
       </div>
       <div className="mt-2">
         <figure className="flex items-center gap-x-1 text-fifth text-[11px] md:text-para-sm">
-          2019 ·{' '}
-          <RenderSVG name={icons[type]} className="fill-fifth size-2.5" />{' '}
-          {type} · e
+          {data.year} ·{' '}
+          <RenderSVG name={icons[data.type]} className="fill-fifth size-2.5" />{' '}
+          {data.type} · {data.rating}
         </figure>
         <h2 className="mt-1 text-head-xs md:text-head-sm font-medium">
-          the great lands
+          {data.title}
         </h2>
       </div>
     </div>
