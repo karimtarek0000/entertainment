@@ -1,3 +1,18 @@
-export default function Movies() {
-  return <div>Movies</div>
+import { getMovies } from '@/actions'
+import SkeletonCard from '@/components/molecules/skeleton/SkeletonCard'
+import CardWrapper from '@/components/organisms/CardWrapper'
+import { Suspense } from 'react'
+
+export default async function Movies() {
+  const movies = await getMovies()
+
+  return (
+    <section className="container">
+      <h1 className="text-head-sm md:text-head-lg">Movies</h1>
+
+      <Suspense fallback={<SkeletonCard count={25} />}>
+        <CardWrapper data={movies} />
+      </Suspense>
+    </section>
+  )
 }
