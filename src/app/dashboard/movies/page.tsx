@@ -8,7 +8,7 @@ export default async function Movies() {
 
   return (
     <section className="container">
-      <h1 className="text-head-sm md:text-head-lg">Movies</h1>
+      <h1 className="page-heading">Movies</h1>
 
       <Suspense fallback={<SkeletonCard count={25} />}>
         <CardWrapper type="Movie" data={movies} />
