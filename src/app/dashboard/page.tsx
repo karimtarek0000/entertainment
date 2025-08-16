@@ -8,7 +8,7 @@ export default function Dashboard() {
           Recommended for you
         </h1>
 
-        <CardWrapper />
+        {/* <CardWrapper /> */}
       </section>
     </>
   )
