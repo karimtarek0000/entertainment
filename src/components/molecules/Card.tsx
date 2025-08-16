@@ -6,7 +6,7 @@ import { PropsWithChildren } from 'react'
 
 interface CardProps extends PropsWithChildren {
   type: 'Movie' | 'TV Series'
-  title: string
+  data: CardData
 }
 
 const icons = {
@@ -14,7 +14,7 @@ const icons = {
   'TV Series': 'series',
 }
 
-export default function Card({ type, title = 'Empty', children }: CardProps) {
+export default function Card({ type, data, children }: CardProps) {
   return (
     <div>
       <div className="card group/card">
@@ -28,12 +28,12 @@ export default function Card({ type, title = 'Empty', children }: CardProps) {
       </div>
       <div className="mt-2">
         <figure className="flex items-center gap-x-1 text-fifth text-[11px] md:text-para-sm">
-          2019 ·{' '}
+          {data.year} ·{' '}
           <RenderSVG name={icons[type]} className="fill-fifth size-2.5" />{' '}
-          {type} · e
+          {type} · {data.rating}
         </figure>
         <h2 className="mt-1 text-head-xs md:text-head-sm font-medium">
-          {title}
+          {data.title}
         </h2>
       </div>
     </div>
