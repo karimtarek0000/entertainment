@@ -84,6 +84,10 @@ body {
   @apply flex justify-center items-center;
 }
 
+@utility page-heading {
+  @apply text-head-sm md:text-head-lg mb-6;
+}
+
 @utility auth-heading {
   @apply text-head-lg pb-10 text-center;
 }
