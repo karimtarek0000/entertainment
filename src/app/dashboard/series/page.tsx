@@ -11,7 +11,7 @@ export default async function Series() {
       <h1 className="page-heading">TV Series</h1>
 
       <Suspense fallback={<SkeletonCard count={25} />}>
-        <CardWrapper type="TV Series" data={series} />
+        <CardWrapper data={series} />
       </Suspense>
     </section>
   )
