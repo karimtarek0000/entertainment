@@ -19,6 +19,7 @@ declare global {
     title: string
     year: number
     rating: string
+    type: 'Movie' | 'TV Series'
   }
 
   interface CardWrapperData extends CardData {
