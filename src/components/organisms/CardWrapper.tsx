@@ -9,15 +9,11 @@ import RenderSVG from '@/components/molecules/RenderSVG'
 import { useRef, useState } from 'react'
 
 interface CardWrapperProps {
-  data: {
-    id: string
-    title: string
-    trailer: string
-    thumbnail: string
-  }[]
+  type: 'Movie' | 'TV Series'
+  data: CardWrapperData[]
 }
 
-export default function CardWrapper({ data }: CardWrapperProps) {
+export default function CardWrapper({ type, data }: CardWrapperProps) {
   const playerRefs = useRef<{ [key: string]: YouTubePlayerRef | null }>({})
   const [playingStates, setPlayingStates] = useState<{
     [key: string]: boolean
@@ -42,7 +38,7 @@ export default function CardWrapper({ data }: CardWrapperProps) {
   return (
     <div className="card-wrapper">
       {data?.map(item => (
-        <Card key={item.id} type="Movie" title={item.title}>
+        <Card key={item.id} type={type} data={item}>
           <YouTubePlayer
             ref={ref => {
               playerRefs.current[item.id] = ref
