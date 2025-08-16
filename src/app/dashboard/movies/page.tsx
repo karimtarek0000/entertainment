@@ -11,7 +11,7 @@ export default async function Movies() {
       <h1 className="page-heading">Movies</h1>
 
       <Suspense fallback={<SkeletonCard count={25} />}>
-        <CardWrapper type="Movie" data={movies} />
+        <CardWrapper data={movies} />
       </Suspense>
     </section>
   )
