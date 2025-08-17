@@ -27,6 +27,11 @@ declare global {
     trailer: string
     thumbnail: string
   }
+
+  interface UserProfile {
+    id: string
+    email: string
+  }
 }
 
 export {}
