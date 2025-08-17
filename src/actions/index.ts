@@ -40,3 +40,15 @@ export const getCategories = async () => {
     recommended: [...recommendedTvData, ...recommendedMovieData],
   }
 }
+
+export const addNewUser = async (userData: UserProfile) => {
+  const response = await (
+    await fetch(`${process.env.API_URL}/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData),
+    })
+  ).json()
+
+  return response
+}
