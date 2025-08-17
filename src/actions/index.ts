@@ -1,5 +1,26 @@
 'use server'
 
+import { cookies } from 'next/headers'
+
+export const setUserCookie = async (userData: {
+  id: string
+  email: string
+}) => {
+  cookies().set('user-info', JSON.stringify(userData), {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    path: '/',
+  })
+}
+
+const getUserIdFromCookie = () => {
+  const userCookie = cookies().get('user-info')
+  const userData = JSON.parse(userCookie.value)
+  return userData.id
+}
+
+//
 export const getMovies = async () => {
   const data = await fetch(`${process.env.API_URL}/movies`)
   return await data.json()
@@ -8,6 +29,16 @@ export const getMovies = async () => {
 export const getSeries = async () => {
   const data = await fetch(`${process.env.API_URL}/tvSeries`)
   return await data.json()
+}
+
+export const getBookmarks = async () => {
+  const userId = getUserIdFromCookie()
+
+  const data = await (
+    await fetch(`${process.env.API_URL}/users?id=${userId}`)
+  ).json()
+
+  return data[0].bookmarks
 }
 
 export const getCategories = async () => {
@@ -53,12 +84,11 @@ export const addNewUser = async (userData: UserProfile) => {
   return response
 }
 
-export const addBookmarksForUser = async (
-  userId: string,
-  videoInfo: CardData,
-) => {
+export const addBookmarksForUser = async (videoInfo: CardData) => {
   try {
     // First, get the current user data
+    const userId = getUserIdFromCookie()
+
     const getUserResponse = await fetch(
       `${process.env.API_URL}/users?id=${userId}`,
     )
@@ -71,11 +101,14 @@ export const addBookmarksForUser = async (
     const user = users.find((u: any) => u.id === userId)
 
     if (!user) {
-      throw new Error('User not found')
+      //
     }
 
     // Add new bookmark to existing bookmarks
-    const updatedBookmarks = [...user.bookmarks, videoInfo]
+    const updatedBookmarks = [
+      ...user.bookmarks,
+      { ...videoInfo, isBookmarked: true },
+    ]
 
     // Update the user with new bookmarks
     const updateResponse = await fetch(
@@ -90,13 +123,12 @@ export const addBookmarksForUser = async (
     )
 
     if (!updateResponse.ok) {
-      throw new Error(`Failed to update bookmarks: ${updateResponse.status}`)
+      //
     }
 
     const data = await updateResponse.json()
     return data
   } catch (error) {
-    console.error('Error adding bookmark:', error)
-    throw error
+    //
   }
 }
