@@ -116,7 +116,7 @@ export const addBookmarksForUser = async (videoInfo: CardData) => {
         (b: CardWrapperData) => b.id !== videoInfo.id,
       )
     } else {
-      bookmarks = [...user.bookmarks, videoInfo]
+      bookmarks = [...user.bookmarks, { ...videoInfo, isBookmarked: true }]
     }
 
     // Update the user with new bookmarks
