@@ -19,7 +19,7 @@ export default function Card({ data, children }: CardProps) {
 
   const toggleBookmarkHandler = async () => {
     setIsBookmarked((prev: boolean) => !prev)
-    await addBookmarksForUser(data)
+    await addBookmarksForUser({ ...data, isBookmarked: true })
   }
 
   return (
