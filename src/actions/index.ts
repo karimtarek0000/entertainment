@@ -46,9 +46,57 @@ export const addNewUser = async (userData: UserProfile) => {
     await fetch(`${process.env.API_URL}/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({ ...userData, bookmarks: [] }),
     })
   ).json()
 
   return response
+}
+
+export const addBookmarksForUser = async (
+  userId: string,
+  videoInfo: CardData,
+) => {
+  try {
+    // First, get the current user data
+    const getUserResponse = await fetch(
+      `${process.env.API_URL}/users?id=${userId}`,
+    )
+
+    if (!getUserResponse.ok) {
+      throw new Error(`User not found: ${getUserResponse.status}`)
+    }
+
+    const users = await getUserResponse.json()
+    const user = users.find((u: any) => u.id === userId)
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    // Add new bookmark to existing bookmarks
+    const updatedBookmarks = [...user.bookmarks, videoInfo]
+
+    // Update the user with new bookmarks
+    const updateResponse = await fetch(
+      `${process.env.API_URL}/users/${user.id}`,
+      {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bookmarks: updatedBookmarks,
+        }),
+      },
+    )
+
+    if (!updateResponse.ok) {
+      throw new Error(`Failed to update bookmarks: ${updateResponse.status}`)
+    }
+
+    const data = await updateResponse.json()
+    return data
+  } catch (error) {
+    console.error('Error adding bookmark:', error)
+    throw error
+  }
 }
