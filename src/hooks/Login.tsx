@@ -1,7 +1,6 @@
 import { useSignIn } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import Dashboard from '../app/dashboard/page'
 
 export const useLogin = () => {
   const { signIn, setActive, isLoaded } = useSignIn()
