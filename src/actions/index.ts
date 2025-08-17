@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
 export const setUserCookie = async (userData: {
@@ -105,10 +106,18 @@ export const addBookmarksForUser = async (videoInfo: CardData) => {
     }
 
     // Add new bookmark to existing bookmarks
-    const updatedBookmarks = [
-      ...user.bookmarks,
-      { ...videoInfo, isBookmarked: true },
-    ]
+    const existingBookmark = user.bookmarks.find(
+      (b: CardWrapperData) => b.id === videoInfo.id,
+    )
+    let bookmarks = null
+
+    if (existingBookmark) {
+      bookmarks = user.bookmarks.filter(
+        (b: CardWrapperData) => b.id !== videoInfo.id,
+      )
+    } else {
+      bookmarks = [...user.bookmarks, videoInfo]
+    }
 
     // Update the user with new bookmarks
     const updateResponse = await fetch(
@@ -117,7 +126,7 @@ export const addBookmarksForUser = async (videoInfo: CardData) => {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          bookmarks: updatedBookmarks,
+          bookmarks,
         }),
       },
     )
@@ -127,6 +136,8 @@ export const addBookmarksForUser = async (videoInfo: CardData) => {
     }
 
     const data = await updateResponse.json()
+    revalidatePath('/dashboard/bookmarks')
+
     return data
   } catch (error) {
     //
