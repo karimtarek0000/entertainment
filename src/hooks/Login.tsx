@@ -1,3 +1,4 @@
+import { setUserCookie } from '@/actions'
 import { useAuth, useSignIn } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
 
@@ -42,7 +43,7 @@ export const useLogin = () => {
         email: pendingUserData,
       }
 
-      localStorage.setItem('user-info', JSON.stringify(userData))
+      setUserCookie(userData)
       setPendingUserData(null)
     }
   }, [userId, pendingUserData])
