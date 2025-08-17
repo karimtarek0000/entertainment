@@ -1,3 +1,4 @@
+import { addNewUser } from '@/actions'
 import { useCounterOTP } from '@/hooks/CounterOTP'
 import { useAuth, useSignUp } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
@@ -44,6 +45,12 @@ export const useSignup = () => {
 
       if (result.status === 'complete') {
         clearTimer()
+        // Use data from the result and signUp objects
+        await addNewUser({
+          id: result.createdUserId as string,
+          email: signUp.emailAddress as string,
+        })
+
         await signOut()
         router.replace('/auth')
       }
