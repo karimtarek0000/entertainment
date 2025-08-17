@@ -1,11 +1,17 @@
 'use client'
 
+import { useUser } from '@clerk/nextjs'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 export default function DropDown() {
+  const { user } = useUser()
+
   return (
     <Menu>
-      <MenuButton className="size-10 border border-white/50 rounded-full focus:outline-none overflow-hidden"></MenuButton>
+      <MenuButton className="size-15 uppercase border border-white/50 rounded-full focus:outline-none overflow-hidden">
+        {user?.emailAddresses[0]?.emailAddress.split('@')[0][0]}
+        {user?.emailAddresses[0]?.emailAddress.split('@')[0][1]}
+      </MenuButton>
 
       <MenuItems
         transition
