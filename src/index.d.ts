@@ -20,6 +20,7 @@ declare global {
     year: number
     rating: string
     type: 'Movie' | 'TV Series'
+    isBookmarked: boolean
   }
 
   interface CardWrapperData extends CardData {
