@@ -1,6 +1,6 @@
 'use client'
 
-import { addBookmarksForUser } from '@/actions'
+import { addBookmarksForUser } from '@/actions/user'
 import Button from '@/components/atoms/Button'
 import RenderSVG from '@/components/molecules/RenderSVG'
 import { PropsWithChildren, useState } from 'react'
