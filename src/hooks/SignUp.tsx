@@ -1,4 +1,4 @@
-import { addNewUser } from '@/actions'
+import { addNewUser } from '@/actions/user'
 import { useCounterOTP } from '@/hooks/CounterOTP'
 import { useAuth, useSignUp } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
