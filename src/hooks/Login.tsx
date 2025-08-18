@@ -1,4 +1,4 @@
-import { setUserCookie } from '@/actions'
+import { setUserCookie } from '@/actions/user'
 import { useAuth, useSignIn } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
 
