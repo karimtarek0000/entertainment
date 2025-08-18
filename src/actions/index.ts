@@ -19,6 +19,9 @@ export const setUserCookie = async (userData: {
 const getUserIdFromCookie = async () => {
   const cookieStore = await cookies()
   const userCookie = cookieStore.get('user-info')
+  if (!userCookie) {
+    throw new Error('User cookie not found')
+  }
   const userData = JSON.parse(userCookie.value)
   return userData.id
 }
