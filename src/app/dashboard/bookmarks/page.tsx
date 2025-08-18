@@ -1,4 +1,4 @@
-import { getBookmarks } from '@/actions'
+import { getBookmarks } from '@/actions/user'
 import SkeletonCard from '@/components/molecules/skeleton/SkeletonCard'
 import CardWrapper from '@/components/organisms/CardWrapper'
 import { Suspense } from 'react'
