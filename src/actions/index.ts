@@ -7,7 +7,8 @@ export const setUserCookie = async (userData: {
   id: string
   email: string
 }) => {
-  cookies().set('user-info', JSON.stringify(userData), {
+  const cookieStore = await cookies()
+  cookieStore.set('user-info', JSON.stringify(userData), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
@@ -15,8 +16,9 @@ export const setUserCookie = async (userData: {
   })
 }
 
-const getUserIdFromCookie = () => {
-  const userCookie = cookies().get('user-info')
+const getUserIdFromCookie = async () => {
+  const cookieStore = await cookies()
+  const userCookie = cookieStore.get('user-info')
   const userData = JSON.parse(userCookie.value)
   return userData.id
 }
@@ -24,7 +26,11 @@ const getUserIdFromCookie = () => {
 //
 export const getMovies = async () => {
   const data = await fetch(`${process.env.API_URL}/movies`)
-  return await data.json()
+
+  const d = await data.json()
+  console.log(d)
+
+  return d
 }
 
 export const getSeries = async () => {
@@ -33,7 +39,7 @@ export const getSeries = async () => {
 }
 
 export const getBookmarks = async () => {
-  const userId = getUserIdFromCookie()
+  const userId = await getUserIdFromCookie()
 
   const data = await (
     await fetch(`${process.env.API_URL}/users?id=${userId}`)
@@ -88,7 +94,7 @@ export const addNewUser = async (userData: UserProfile) => {
 export const addBookmarksForUser = async (videoInfo: CardData) => {
   try {
     // First, get the current user data
-    const userId = getUserIdFromCookie()
+    const userId = await getUserIdFromCookie()
 
     const getUserResponse = await fetch(
       `${process.env.API_URL}/users?id=${userId}`,
@@ -143,3 +149,10 @@ export const addBookmarksForUser = async (videoInfo: CardData) => {
     //
   }
 }
+
+// Simple function to remove duplicates by ID
+// const removeDuplicates = (array: any[]) => {
+//   return array.filter(
+//     (item, index, self) => index === self.findIndex(obj => obj.id === item.id),
+//   )
+// }
