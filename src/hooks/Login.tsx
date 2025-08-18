@@ -1,12 +1,17 @@
-import { useSignIn } from '@clerk/nextjs'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import Dashboard from '../app/dashboard/page'
+import { setUserCookie } from '@/actions/user'
+import { useAuth, useSignIn } from '@clerk/nextjs'
+import { useEffect, useState } from 'react'
+
+interface SignUpData {
+  email: string
+  password: string
+}
 
 export const useLogin = () => {
   const { signIn, setActive, isLoaded } = useSignIn()
-  const router = useRouter()
+  const { userId } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+  const [pendingUserData, setPendingUserData] = useState<string | null>(null)
 
   const handleLogin = async (data: SignUpData) => {
     if (!isLoaded) return
@@ -21,14 +26,27 @@ export const useLogin = () => {
 
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId })
-        router.push('/dashboard')
+        setPendingUserData(data.email)
       }
-    } catch (err: any) {
-      // console.error('Login error:', err)
+    } catch {
+      // Handle login error
     } finally {
       setIsLoading(false)
     }
   }
+
+  // Store user data when userId becomes available
+  useEffect(() => {
+    if (pendingUserData && userId) {
+      const userData = {
+        id: userId,
+        email: pendingUserData,
+      }
+
+      setUserCookie(userData)
+      setPendingUserData(null)
+    }
+  }, [userId, pendingUserData])
 
   return {
     isLoading,

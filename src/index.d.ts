@@ -20,12 +20,18 @@ declare global {
     year: number
     rating: string
     type: 'Movie' | 'TV Series'
+    isBookmarked: boolean
   }
 
   interface CardWrapperData extends CardData {
     id: string
     trailer: string
     thumbnail: string
+  }
+
+  interface UserProfile {
+    id: string
+    email: string
   }
 }
 

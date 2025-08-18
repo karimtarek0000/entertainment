@@ -1,4 +1,4 @@
-import { getCategories } from '@/actions'
+import { getCategories } from '@/actions/resourcess'
 import SkeletonCard from '@/components/molecules/skeleton/SkeletonCard'
 import CardWrapper from '@/components/organisms/CardWrapper'
 import { Suspense } from 'react'
@@ -12,7 +12,7 @@ export default async function Dashboard() {
         <h1 className="page-heading">Trending</h1>
 
         <Suspense fallback={<SkeletonCard count={10} />}>
-          <CardWrapper data={trending} />
+          <CardWrapper data={trending as []} />
         </Suspense>
       </section>
 
@@ -20,7 +20,7 @@ export default async function Dashboard() {
         <h2 className="page-heading">Recommended for you</h2>
 
         <Suspense fallback={<SkeletonCard count={10} />}>
-          <CardWrapper data={recommended} />
+          <CardWrapper data={recommended as []} />
         </Suspense>
       </section>
     </article>

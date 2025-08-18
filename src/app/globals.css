@@ -41,7 +41,7 @@ body {
 }
 
 @utility header {
-  @apply flex items-center lg:flex-col p-4 lg:h-[60rem] bg-secondary justify-between lg:rounded-lg;
+  @apply lg:!sticky lg:!top-0 flex items-center lg:flex-col p-4 lg:h-[60rem] bg-secondary justify-between lg:rounded-lg;
 }
 
 /* Card */

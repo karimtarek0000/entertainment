@@ -1,8 +1,9 @@
 'use client'
 
+import { addBookmarksForUser } from '@/actions/user'
 import Button from '@/components/atoms/Button'
 import RenderSVG from '@/components/molecules/RenderSVG'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useState } from 'react'
 
 interface CardProps extends PropsWithChildren {
   data: CardData
@@ -14,12 +15,23 @@ const icons = {
 }
 
 export default function Card({ data, children }: CardProps) {
+  const [isBookmarked, setIsBookmarked] = useState(data.isBookmarked)
+
+  const toggleBookmarkHandler = async () => {
+    setIsBookmarked((prev: boolean) => !prev)
+    await addBookmarksForUser(data)
+  }
+
   return (
     <div>
       <div className="card group/card">
-        <Button variant="secondary" className="z-40">
+        <Button
+          variant="secondary"
+          onClick={toggleBookmarkHandler}
+          className="z-40"
+        >
           <RenderSVG
-            name="unactive-bookmark"
+            name={isBookmarked ? 'active-bookmark' : 'unactive-bookmark'}
             className="fill-transparent size-4"
           />
         </Button>
