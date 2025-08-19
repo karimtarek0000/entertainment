@@ -12,11 +12,9 @@ export default async function Bookmarks() {
       <h1 className="page-heading">Bookmarks</h1>
 
       <Suspense fallback={<SkeletonCard count={10} />}>
-        {bookmarks.length > 0 ? (
+        <NotFoundContent data={bookmarks} title="No bookmarks available">
           <CardWrapper data={bookmarks} />
-        ) : (
-          <NotFoundContent title="No bookmarks found" />
-        )}
+        </NotFoundContent>
       </Suspense>
     </section>
   )
