@@ -1,7 +1,7 @@
 'use server'
 
 import { getBookmarks } from '@/actions/user'
-import { markAsBookmark } from '@/utils'
+import { markAsBookmark, search } from '@/utils'
 
 export const getCategories = async () => {
   const bookmarks = await getBookmarks()
@@ -45,13 +45,15 @@ export const getCategories = async () => {
   }
 }
 
-export const getMovies = async () => {
+export const getMovies = async (query: string) => {
   const bookmarks = await getBookmarks()
 
   const data = await fetch(`${process.env.API_URL}/movies`)
   const list = await data.json()
 
-  return markAsBookmark(list, bookmarks)
+  return query
+    ? search(markAsBookmark(list, bookmarks) as [], query)
+    : markAsBookmark(list, bookmarks)
 }
 
 export const getSeries = async () => {
