@@ -3,8 +3,10 @@ import SkeletonCard from '@/components/molecules/skeleton/SkeletonCard'
 import CardWrapper from '@/components/organisms/CardWrapper'
 import { Suspense } from 'react'
 
-export default async function Dashboard() {
-  const { trending, recommended } = await getCategories()
+export default async function Dashboard({ searchParams }: PageProps) {
+  const sp = await searchParams
+  const query = sp.search || ''
+  const { trending, recommended } = await getCategories(query)
 
   return (
     <article className="container space-y-6">
