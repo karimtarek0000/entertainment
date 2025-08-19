@@ -3,11 +3,7 @@ import SkeletonCard from '@/components/molecules/skeleton/SkeletonCard'
 import CardWrapper from '@/components/organisms/CardWrapper'
 import { Suspense } from 'react'
 
-interface MoviesPageProps {
-  searchParams: { search?: string }
-}
-
-export default async function Movies({ searchParams }: MoviesPageProps) {
+export default async function Movies({ searchParams }: PageProps) {
   const query = searchParams.search || ''
   const movies = await getMovies(query)
 

@@ -56,11 +56,13 @@ export const getMovies = async (query: string) => {
     : markAsBookmark(list, bookmarks)
 }
 
-export const getSeries = async () => {
+export const getSeries = async (query: string) => {
   const bookmarks = await getBookmarks()
 
   const data = await fetch(`${process.env.API_URL}/tvSeries`)
   const list = await data.json()
 
-  return markAsBookmark(list, bookmarks)
+  return query
+    ? search(markAsBookmark(list, bookmarks) as [], query)
+    : markAsBookmark(list, bookmarks)
 }

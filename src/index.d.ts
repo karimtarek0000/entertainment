@@ -1,4 +1,8 @@
 declare global {
+  interface PageProps {
+    searchParams: { search?: string }
+  }
+
   interface AuthFieldConfig {
     type: string
     ariaLabel: string
