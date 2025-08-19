@@ -3,7 +3,7 @@
 import { getBookmarks } from '@/actions/user'
 import { markAsBookmark, search } from '@/utils'
 
-export const getCategories = async () => {
+export const getCategories = async (query: string) => {
   const bookmarks = await getBookmarks()
 
   const [
@@ -30,13 +30,19 @@ export const getCategories = async () => {
     recommendedMovies.json(),
   ])
 
-  const trending = markAsBookmark(
-    [...trendingTvData, ...trendingMovieData] as [],
-    bookmarks,
+  const trending = search(
+    markAsBookmark(
+      [...trendingTvData, ...trendingMovieData] as [],
+      bookmarks,
+    ) as [],
+    query,
   )
-  const recommended = markAsBookmark(
-    [...recommendedTvData, ...recommendedMovieData] as [],
-    bookmarks,
+  const recommended = search(
+    markAsBookmark(
+      [...recommendedTvData, ...recommendedMovieData] as [],
+      bookmarks,
+    ) as [],
+    query,
   )
 
   return {
@@ -51,9 +57,7 @@ export const getMovies = async (query: string) => {
   const data = await fetch(`${process.env.API_URL}/movies`)
   const list = await data.json()
 
-  return query
-    ? search(markAsBookmark(list, bookmarks) as [], query)
-    : markAsBookmark(list, bookmarks)
+  return search(markAsBookmark(list, bookmarks) as [], query)
 }
 
 export const getSeries = async (query: string) => {
@@ -62,7 +66,5 @@ export const getSeries = async (query: string) => {
   const data = await fetch(`${process.env.API_URL}/tvSeries`)
   const list = await data.json()
 
-  return query
-    ? search(markAsBookmark(list, bookmarks) as [], query)
-    : markAsBookmark(list, bookmarks)
+  return search(markAsBookmark(list, bookmarks) as [], query)
 }
