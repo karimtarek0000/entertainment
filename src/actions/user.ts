@@ -1,5 +1,6 @@
 'use server'
 
+import { search } from '@/utils'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
@@ -27,14 +28,14 @@ const getUserIdFromCookie = async () => {
   return userData.id
 }
 
-export const getBookmarks = async () => {
+export const getBookmarks = async (query?: string) => {
   const userId = await getUserIdFromCookie()
 
   const data = await (
     await fetch(`${process.env.API_URL}/users?id=${userId}`)
   ).json()
 
-  return data[0].bookmarks
+  return search(data[0].bookmarks, query!)
 }
 
 export const addNewUser = async (userData: UserProfile) => {
