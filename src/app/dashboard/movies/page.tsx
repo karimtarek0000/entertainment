@@ -4,7 +4,8 @@ import CardWrapper from '@/components/organisms/CardWrapper'
 import { Suspense } from 'react'
 
 export default async function Movies({ searchParams }: PageProps) {
-  const query = searchParams.search || ''
+  const sp = await searchParams
+  const query = sp.search || ''
   const movies = await getMovies(query)
 
   return (
