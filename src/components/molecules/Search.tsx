@@ -20,7 +20,7 @@ export default function Search() {
 
   const searchHandler = useDebounce((e: ChangeEvent<HTMLInputElement>) => {
     replace(`${pathname}?search=${e.target.value}`)
-  }, 1000)
+  }, 800)
 
   return (
     <form className="mt-6 flex items-end space-x-1 ps-4 max-h-8 mb-6">
