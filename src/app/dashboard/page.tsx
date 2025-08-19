@@ -1,4 +1,5 @@
 import { getCategories } from '@/actions/resourcess'
+import NotFoundContent from '@/components/molecules/NotFoundContent'
 import SkeletonCard from '@/components/molecules/skeleton/SkeletonCard'
 import CardWrapper from '@/components/organisms/CardWrapper'
 import { Suspense } from 'react'
@@ -14,7 +15,13 @@ export default async function Dashboard({ searchParams }: PageProps) {
         <h1 className="page-heading">Trending</h1>
 
         <Suspense fallback={<SkeletonCard count={10} />}>
-          <CardWrapper data={trending as []} />
+          <NotFoundContent
+            data={trending as []}
+            title="No trending available"
+            type="all"
+          >
+            <CardWrapper data={trending as []} />
+          </NotFoundContent>
         </Suspense>
       </section>
 
@@ -22,7 +29,13 @@ export default async function Dashboard({ searchParams }: PageProps) {
         <h2 className="page-heading">Recommended for you</h2>
 
         <Suspense fallback={<SkeletonCard count={10} />}>
-          <CardWrapper data={recommended as []} />
+          <NotFoundContent
+            data={recommended as []}
+            title="No recommended available"
+            type="all"
+          >
+            <CardWrapper data={recommended as []} />
+          </NotFoundContent>
         </Suspense>
       </section>
     </article>
