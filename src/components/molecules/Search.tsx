@@ -26,6 +26,7 @@ export default function Search() {
     <form className="mt-6 flex items-end space-x-1 ps-4 max-h-8 mb-6">
       <RenderSVG name="search" className="mb-3" />
       <Input
+        key={pathname}
         onChange={e => searchHandler(e)}
         className="border-transparent focus:border-transparent"
         aria-label={`Search for ${placeHolders[pathname]}`}
