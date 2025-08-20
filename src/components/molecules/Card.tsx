@@ -3,6 +3,7 @@
 import { toggleBookmarksForUser } from '@/actions/user'
 import Button from '@/components/atoms/Button'
 import RenderSVG from '@/components/molecules/RenderSVG'
+import { updateBookmarkStatus } from '@/services'
 import { usePathname } from 'next/navigation'
 import { PropsWithChildren, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -18,25 +19,10 @@ const icons = {
 
 export default function Card({ data, children }: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(data.isBookmarked)
-  const pathname = usePathname()
 
   const toggleBookmarkHandler = async () => {
     setIsBookmarked((prev: boolean) => !prev)
-
-    try {
-      await toggleBookmarksForUser(data, pathname === '/dashboard/bookmarks')
-      toast.success(
-        `Successfully ${isBookmarked ? 'removed' : 'added'} bookmark - ${
-          data.type
-        }`,
-      )
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message)
-      } else {
-        toast.error('An unexpected error occurred')
-      }
-    }
+    await updateBookmarkStatus(data, !isBookmarked, pathname)
   }
 
   return (
