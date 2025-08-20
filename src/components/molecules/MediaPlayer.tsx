@@ -34,7 +34,7 @@ const PLAYER_STATES: YouTubePlayerState = {
 }
 
 const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
-  ({ url, imageURL, id }, ref) => {
+  ({ url, imageURL }, ref) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
     const [isReady, setIsReady] = useState<boolean>(false)
     const [shouldLoad, setShouldLoad] = useState<boolean>(false)
