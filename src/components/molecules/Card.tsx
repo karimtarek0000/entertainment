@@ -1,12 +1,10 @@
 'use client'
 
-import { toggleBookmarksForUser } from '@/actions/user'
 import Button from '@/components/atoms/Button'
 import RenderSVG from '@/components/molecules/RenderSVG'
 import { updateBookmarkStatus } from '@/services'
 import { usePathname } from 'next/navigation'
 import { PropsWithChildren, useState } from 'react'
-import toast from 'react-hot-toast'
 
 interface CardProps extends PropsWithChildren {
   data: CardWrapperData
@@ -19,10 +17,11 @@ const icons = {
 
 export default function Card({ data, children }: CardProps) {
   const [isBookmarked, setIsBookmarked] = useState(data.isBookmarked)
+  const pathname = usePathname()
 
   const toggleBookmarkHandler = async () => {
     setIsBookmarked((prev: boolean) => !prev)
-    await updateBookmarkStatus(data, !isBookmarked, pathname)
+    await updateBookmarkStatus(data, isBookmarked, pathname)
   }
 
   return (
