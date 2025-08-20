@@ -1,6 +1,7 @@
 import { setUserCookie } from '@/actions/user'
 import { useAuth, useSignIn } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 interface SignUpData {
   email: string
@@ -31,6 +32,7 @@ export const useLogin = () => {
     } catch {
       // Handle login error
       setIsLoading(false)
+      toast.error('Email or password is incorrect')
     }
   }
 
@@ -44,6 +46,7 @@ export const useLogin = () => {
 
       setUserCookie(userData)
       setPendingUserData(null)
+      toast.success('Successfully logged in')
     }
   }, [userId, pendingUserData])
 
