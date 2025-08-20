@@ -1,4 +1,4 @@
-# entertainment-trailer
+# Entertainment-trailer
 
 A modern, full-stack web application for browsing, searching, and bookmarking
 movies and TV series trailers. Built with Next.js, React, Clerk authentication,
