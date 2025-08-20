@@ -6,7 +6,7 @@ import RenderSVG from '@/components/molecules/RenderSVG'
 import { PropsWithChildren, useState } from 'react'
 
 interface CardProps extends PropsWithChildren {
-  data: CardData
+  data: CardWrapperData
 }
 
 const icons = {
