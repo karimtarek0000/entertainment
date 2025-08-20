@@ -1,6 +1,6 @@
 declare global {
-  interface PageProps {
-    searchParams: { search?: string }
+  type PageProps = {
+    searchParams: Promise<{ [key: string]: string | undefined }>
   }
 
   interface AuthFieldConfig {
