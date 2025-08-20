@@ -16,6 +16,7 @@ export default function Input({
     <>
       <input
         type="text"
+        autoComplete="off"
         {...attrs}
         className={`input ${
           error ? 'border-red-500 !mb-3.5 focus:border-red-500' : ''
