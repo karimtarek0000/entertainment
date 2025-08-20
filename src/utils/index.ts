@@ -7,7 +7,7 @@ export const markAsBookmark = (list: [], bookmarks: { id: string }[]) => {
   })
 }
 
-export const search = (list: CardData[], query: string): any[] => {
+export const search = (list: CardData[], query: string): CardData[] => {
   const regex = new RegExp(query, 'i')
   return list.filter(movie => regex.test(movie.title))
 }
