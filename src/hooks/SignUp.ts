@@ -30,8 +30,8 @@ export const useSignup = () => {
       setPendingVerification(true)
     } catch {
       // Add error handling here
-    } finally {
       setLoading(false)
+    } finally {
       startTimer()
     }
   }
