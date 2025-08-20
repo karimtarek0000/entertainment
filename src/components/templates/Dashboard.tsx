@@ -1,5 +1,6 @@
 import Search from '@/components/molecules/Search'
 import Header from '@/components/organisms/Header'
+import { Suspense } from 'react'
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   return (
@@ -7,7 +8,9 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       <Header />
 
       <main>
-        <Search />
+        <Suspense>
+          <Search />
+        </Suspense>
         {children}
       </main>
     </div>
