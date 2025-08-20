@@ -30,7 +30,6 @@ export const useLogin = () => {
       }
     } catch {
       // Handle login error
-    } finally {
       setIsLoading(false)
     }
   }
