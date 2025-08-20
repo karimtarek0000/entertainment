@@ -1,5 +1,3 @@
-yarn dev
-
 # entertainment-trailer
 
 A modern, full-stack web application for browsing, searching, and bookmarking
