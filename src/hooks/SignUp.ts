@@ -3,6 +3,7 @@ import { useCounterOTP } from '@/hooks/CounterOTP'
 import { useAuth, useSignUp } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 export const useSignup = () => {
   const { displayTime, isTimeOut, startTimer, clearTimer } = useCounterOTP()
@@ -28,8 +29,8 @@ export const useSignup = () => {
 
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
       setPendingVerification(true)
+      toast.success('Verification email sent')
     } catch {
-      // Add error handling here
       setLoading(false)
     } finally {
       startTimer()
@@ -53,9 +54,10 @@ export const useSignup = () => {
 
         await signOut()
         router.replace('/auth')
+        toast.success('Successfully signup and verified email 👌')
       }
     } catch {
-      // Add error handling here
+      toast.error('Failed to verify email')
     }
   }
 
@@ -69,8 +71,9 @@ export const useSignup = () => {
       setIsResending(true)
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
       setCode('')
+      toast.success('Successfully resent verification email')
     } catch {
-      // Add error handling here
+      toast.error('Failed to resend verification email')
     } finally {
       setIsResending(false)
     }
