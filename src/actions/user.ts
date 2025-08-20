@@ -50,7 +50,7 @@ export const addNewUser = async (userData: UserProfile) => {
   return response
 }
 
-export const addBookmarksForUser = async (videoInfo: CardData) => {
+export const addBookmarksForUser = async (videoInfo: CardWrapperData) => {
   try {
     // First, get the current user data
     const userId = await getUserIdFromCookie()
@@ -64,7 +64,7 @@ export const addBookmarksForUser = async (videoInfo: CardData) => {
     }
 
     const users = await getUserResponse.json()
-    const user = users.find((u: any) => u.id === userId)
+    const user = users.find((u: CardWrapperData) => u.id === userId)
 
     if (!user) {
       //
@@ -104,7 +104,7 @@ export const addBookmarksForUser = async (videoInfo: CardData) => {
     revalidatePath('/dashboard/bookmarks')
 
     return data
-  } catch (error) {
+  } catch {
     //
   }
 }
