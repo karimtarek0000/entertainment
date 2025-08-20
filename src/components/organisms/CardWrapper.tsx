@@ -1,12 +1,11 @@
 'use client'
 
-import Button from '@/components/atoms/Button'
 import Card from '@/components/molecules/Card'
 import YouTubePlayer, {
   YouTubePlayerRef,
 } from '@/components/molecules/MediaPlayer'
-import RenderSVG from '@/components/molecules/RenderSVG'
-import { useRef, useState } from 'react'
+import PlayVideoPlayerButton from '@/components/organisms/PlayVideoPlayerButton'
+import { useRef } from 'react'
 
 interface CardWrapperProps {
   data: CardWrapperData[]
@@ -14,23 +13,19 @@ interface CardWrapperProps {
 
 export default function CardWrapper({ data }: CardWrapperProps) {
   const playerRefs = useRef<{ [key: string]: YouTubePlayerRef | null }>({})
-  const [playingStates, setPlayingStates] = useState<{
-    [key: string]: boolean
-  }>({})
+  const playingStates = useRef<{ [key: string]: boolean }>({})
 
   const handleToggleVideo = (id: string) => {
     const player = playerRefs.current[id]
+    const isPlaying = playingStates.current[id]
 
     if (player) {
-      const isCurrentlyPlaying = playingStates[id] || false
-
-      if (isCurrentlyPlaying) {
+      if (isPlaying) {
         player.pause()
-        setPlayingStates(prev => ({ ...prev, [id]: false }))
       } else {
         player.play()
-        setPlayingStates(prev => ({ ...prev, [id]: true }))
       }
+      playingStates.current[id] = !isPlaying
     }
   }
 
@@ -45,15 +40,9 @@ export default function CardWrapper({ data }: CardWrapperProps) {
             url={item.trailer}
             imageURL={item.thumbnail}
           />
-          <div className="card-wrapper__actions">
-            <Button onClick={() => handleToggleVideo(item.id)} variant="third">
-              <RenderSVG
-                name={playingStates[item.id] ? 'pause' : 'play'}
-                className="size-8"
-              />
-              {playingStates[item.id] ? 'Pause' : 'Play'}
-            </Button>
-          </div>
+          <PlayVideoPlayerButton
+            toggleVideo={() => handleToggleVideo(item.id)}
+          />
         </Card>
       ))}
     </div>
