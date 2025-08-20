@@ -111,6 +111,6 @@ export const toggleBookmarksForUser = async (
 
     return data
   } catch (error) {
-    return { error: error instanceof Error ? error.message : 'Unknown error' }
+    return { error: error instanceof Error ? error : 'Unknown error' }
   }
 }
