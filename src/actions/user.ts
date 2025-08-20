@@ -50,7 +50,10 @@ export const addNewUser = async (userData: UserProfile) => {
   return response
 }
 
-export const addBookmarksForUser = async (videoInfo: CardWrapperData) => {
+export const toggleBookmarksForUser = async (
+  videoInfo: CardWrapperData,
+  isDashboard: boolean,
+) => {
   try {
     // First, get the current user data
     const userId = await getUserIdFromCookie()
@@ -67,7 +70,7 @@ export const addBookmarksForUser = async (videoInfo: CardWrapperData) => {
     const user = users.find((u: CardWrapperData) => u.id === userId)
 
     if (!user) {
-      //
+      throw new Error('User not found')
     }
 
     // Add new bookmark to existing bookmarks
@@ -97,14 +100,17 @@ export const addBookmarksForUser = async (videoInfo: CardWrapperData) => {
     )
 
     if (!updateResponse.ok) {
-      //
+      throw new Error('Failed to update user bookmarks')
     }
 
     const data = await updateResponse.json()
-    revalidatePath('/dashboard/bookmarks')
+
+    if (isDashboard) {
+      revalidatePath('/dashboard/bookmarks')
+    }
 
     return data
-  } catch {
-    //
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : 'Unknown error' }
   }
 }
