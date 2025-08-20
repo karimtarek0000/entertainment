@@ -62,13 +62,92 @@ and Tailwind CSS.
 
 ## Project Structure
 
-- `src/app/` – Next.js app directory (routing, layouts, pages)
-- `src/components/` – UI components (atoms, molecules, organisms, templates)
-- `src/actions/` – Server actions for data fetching and user management
-- `src/hooks/` – Custom React hooks (auth, debounce, OTP, etc.)
+```
+entertainment/
+│
+├── public/
+│   ├── logo.svg
+│   └── icons/
+│       └── sprite.svg
+│
+├── src/
+│   ├── app/
+│   │   ├── globals.css         # Global styles (Tailwind)
+│   │   ├── layout.tsx          # Root layout
+│   │   ├── middleware.ts       # Route protection logic
+│   │   ├── auth/
+│   │   │   ├── layout.tsx      # Auth layout
+│   │   │   ├── page.tsx        # Login page
+│   │   │   └── sign-up/
+│   │   │       └── page.tsx    # Sign up page
+│   │   └── dashboard/
+│   │       ├── layout.tsx      # Dashboard layout
+│   │       ├── page.tsx        # Dashboard home (Trending/Recommended)
+│   │       ├── bookmarks/
+│   │       │   └── page.tsx    # Bookmarks page
+│   │       ├── movies/
+│   │       │   └── page.tsx    # Movies page
+│   │       └── series/
+│   │           └── page.tsx    # TV Series page
+│   ├── actions/
+│   │   ├── resourcess.ts       # Data fetching for movies/series
+│   │   └── user.ts             # User/bookmark actions
+│   ├── components/
+│   │   ├── atoms/
+│   │   │   ├── Button.tsx
+│   │   │   └── Input.tsx
+│   │   ├── molecules/
+│   │   │   ├── AuthForm.tsx
+│   │   │   ├── AuthVerify.tsx
+│   │   │   ├── Card.tsx
+│   │   │   ├── DropDown.tsx
+│   │   │   ├── Logo.tsx
+│   │   │   ├── MediaPlayer.tsx
+│   │   │   ├── Navbar.tsx
+│   │   │   ├── NotFoundContent.tsx
+│   │   │   ├── RenderSVG.tsx
+│   │   │   ├── Search.tsx
+│   │   │   └── skeleton/
+│   │   │       └── SkeletonCard.tsx
+│   │   ├── organisms/
+│   │   │   ├── CardWrapper.tsx
+│   │   │   └── Header.tsx
+│   │   └── templates/
+│   │       └── Dashboard.tsx
+│   ├── conifg/
+│   │   └── configDrivenUI.auth.json  # Auth form config
+│   ├── context/                # (empty or for React context)
+│   ├── hooks/
+│   │   ├── CounterOTP.ts
+│   │   ├── Debounce.ts
+│   │   ├── Login.ts
+│   │   └── SignUp.ts
+│   ├── utils/
+│   │   ├── index.ts
+│   │   └── twMerge.ts
+│   ├── validations/
+│   │   └── auth.schema.ts
+│   └── index.d.ts             # TypeScript global types
+│
+├── .env                       # Environment variables
+├── package.json
+├── tsconfig.json
+├── postcss.config.mjs
+├── eslint.config.mjs
+├── next.config.ts
+└── README.md
+```
+
+**Key folders:**
+
+- `public/` – Static assets (logo, SVGs)
+- `src/app/` – App routes, layouts, and pages
+- `src/components/` – UI components (atomic design)
+- `src/actions/` – Server actions for data and user
+- `src/hooks/` – Custom React hooks
 - `src/utils/` – Utility functions
-- `src/validations/` – Zod schemas for form validation
-- `src/conifg/` – Config-driven UI for auth forms
+- `src/validations/` – Zod schemas for validation
+- `src/conifg/` – Config-driven UI (auth forms)
 
 ---
 
