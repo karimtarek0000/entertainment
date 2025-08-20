@@ -1,6 +1,7 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Outfit } from 'next/font/google'
+import { Toaster } from 'react-hot-toast'
 import './globals.css'
 
 const outfit = Outfit({
@@ -21,7 +22,26 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${outfit.variable} antialiased`}>{children}</body>
+        <body className={`${outfit.variable} antialiased`}>
+          {children}
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#fc4747',
+                color: '#fff',
+              },
+
+              success: {
+                style: {
+                  background: '#161D2F',
+                  color: '#fff',
+                },
+              },
+            }}
+          />
+        </body>
       </html>
     </ClerkProvider>
   )
