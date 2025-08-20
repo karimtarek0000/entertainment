@@ -20,6 +20,7 @@ declare global {
   }
 
   interface CardData {
+    id: string
     title: string
     year: number
     rating: string
@@ -28,7 +29,6 @@ declare global {
   }
 
   interface CardWrapperData extends CardData {
-    id: string
     trailer: string
     thumbnail: string
   }
