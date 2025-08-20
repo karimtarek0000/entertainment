@@ -28,7 +28,7 @@ export const useSignup = () => {
 
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
       setPendingVerification(true)
-    } catch (err: any) {
+    } catch {
       // Add error handling here
     } finally {
       setLoading(false)
@@ -54,7 +54,7 @@ export const useSignup = () => {
         await signOut()
         router.replace('/auth')
       }
-    } catch (err: any) {
+    } catch {
       // Add error handling here
     }
   }
@@ -69,7 +69,7 @@ export const useSignup = () => {
       setIsResending(true)
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
       setCode('')
-    } catch (err: any) {
+    } catch {
       // Add error handling here
     } finally {
       setIsResending(false)
