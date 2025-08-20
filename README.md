@@ -29,37 +29,6 @@ and Tailwind CSS.
 
 ---
 
-## Getting Started
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone <repo-url>
-   cd entertainment
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Set up environment variables:**
-
-   - Copy `.env` and update `API_URL` and Clerk keys as needed.
-
-4. **Run the development server:**
-
-   ```bash
-   npm run dev
-   ```
-
-5. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
-
----
-
 ## Project Structure
 
 ```
