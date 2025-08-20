@@ -65,23 +65,25 @@ and Tailwind CSS.
 ```
 entertainment/
 │
-├── public/
+├── public/                    # Static assets (logo, SVGs)
 │   ├── logo.svg
 │   └── icons/
 │       └── sprite.svg
 │
 ├── src/
-│   ├── app/
+│   ├── app/                   # App routes, layouts, and pages
 │   │   ├── globals.css         # Global styles (Tailwind)
 │   │   ├── layout.tsx          # Root layout
+│   │   ├── error.tsx           # Global error page
 │   │   ├── middleware.ts       # Route protection logic
-│   │   ├── auth/
+│   │   ├── auth/               # Auth pages and layouts
 │   │   │   ├── layout.tsx      # Auth layout
 │   │   │   ├── page.tsx        # Login page
 │   │   │   └── sign-up/
 │   │   │       └── page.tsx    # Sign up page
-│   │   └── dashboard/
+│   │   └── dashboard/          # Dashboard section
 │   │       ├── layout.tsx      # Dashboard layout
+│   │       ├── error.tsx       # Dashboard error page
 │   │       ├── page.tsx        # Dashboard home (Trending/Recommended)
 │   │       ├── bookmarks/
 │   │       │   └── page.tsx    # Bookmarks page
@@ -89,14 +91,14 @@ entertainment/
 │   │       │   └── page.tsx    # Movies page
 │   │       └── series/
 │   │           └── page.tsx    # TV Series page
-│   ├── actions/
+│   ├── actions/                # Server actions for data and user
 │   │   ├── resourcess.ts       # Data fetching for movies/series
 │   │   └── user.ts             # User/bookmark actions
-│   ├── components/
-│   │   ├── atoms/
+│   ├── components/             # UI components (atomic design)
+│   │   ├── atoms/              # Smallest UI elements
 │   │   │   ├── Button.tsx
 │   │   │   └── Input.tsx
-│   │   ├── molecules/
+│   │   ├── molecules/          # Compound components
 │   │   │   ├── AuthForm.tsx
 │   │   │   ├── AuthVerify.tsx
 │   │   │   ├── Card.tsx
@@ -109,27 +111,27 @@ entertainment/
 │   │   │   ├── Search.tsx
 │   │   │   └── skeleton/
 │   │   │       └── SkeletonCard.tsx
-│   │   ├── organisms/
+│   │   ├── organisms/          # Complex UI sections
 │   │   │   ├── CardWrapper.tsx
 │   │   │   └── Header.tsx
-│   │   └── templates/
+│   │   └── templates/          # Page templates
 │   │       └── Dashboard.tsx
-│   ├── conifg/
-│   │   └── configDrivenUI.auth.json  # Auth form config
-│   ├── context/                # (empty or for React context)
-│   ├── hooks/
+│   ├── config/                 # Config-driven UI (auth forms)
+│   │   └── configDrivenUI.auth.json
+│   ├── context/                # React context providers (if any)
+│   ├── hooks/                  # Custom React hooks
 │   │   ├── CounterOTP.ts
 │   │   ├── Debounce.ts
 │   │   ├── Login.ts
 │   │   └── SignUp.ts
-│   ├── utils/
+│   ├── utils/                  # Utility functions
 │   │   ├── index.ts
 │   │   └── twMerge.ts
-│   ├── validations/
+│   ├── validations/            # Zod schemas for validation
 │   │   └── auth.schema.ts
-│   └── index.d.ts             # TypeScript global types
+│   └── index.d.ts              # TypeScript global types
 │
-├── .env                       # Environment variables
+├── .env                        # Environment variables
 ├── package.json
 ├── tsconfig.json
 ├── postcss.config.mjs
