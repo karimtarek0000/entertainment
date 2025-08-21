@@ -2,7 +2,13 @@ import { getMovies } from '@/actions/resourcess'
 import NotFoundContent from '@/components/molecules/NotFoundContent'
 import SkeletonCard from '@/components/molecules/skeleton/SkeletonCard'
 import CardWrapper from '@/components/organisms/CardWrapper'
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
+
+export const metadata: Metadata = {
+  title: 'Movies',
+  description: 'Learn more about our movie collection',
+}
 
 export default async function Movies({ searchParams }: PageProps) {
   const sp = await searchParams

@@ -2,7 +2,13 @@ import { getBookmarks } from '@/actions/user'
 import NotFoundContent from '@/components/molecules/NotFoundContent'
 import SkeletonCard from '@/components/molecules/skeleton/SkeletonCard'
 import CardWrapper from '@/components/organisms/CardWrapper'
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
+
+export const metadata: Metadata = {
+  title: 'Bookmarks',
+  description: 'Manage your favorite trailers and series',
+}
 
 export default async function Bookmarks({ searchParams }: PageProps) {
   const sp = await searchParams
