@@ -10,7 +10,7 @@ interface ButtonProps extends PropsWithChildren, ComponentProps<'button'> {
 // Classes
 const globalClasses =
   'text-center group flex-center duration-150 cursor-pointer text-white transition-colors'
-const variants: Record<Variants, string> = {
+export const variants: Record<Variants, string> = {
   primary:
     'bg-third disabled:pointer-events-none disabled:opacity-50 text-para-md hover:bg-white hover:text-black rounded-md h-[3rem] w-full',
   secondary:
@@ -32,6 +32,7 @@ export default function Button({
         variants[variant],
         attrs.className || '',
       )}
+      data-testId={variant}
     >
       {children}
     </button>
