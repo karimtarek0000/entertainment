@@ -7,7 +7,7 @@ import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Movies',
-  description: 'Learn more about our movie collection',
+  description: 'Browse and discover new movies trailers',
 }
 
 export default async function Movies({ searchParams }: PageProps) {
