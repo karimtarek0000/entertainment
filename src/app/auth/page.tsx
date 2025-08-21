@@ -1,29 +1,11 @@
-'use client'
+import Login from '@/components/templates/Login'
+import type { Metadata } from 'next'
 
-import AuthForm from '@/components/molecules/AuthForm'
-import { useLogin } from '@/hooks/Login'
-import Link from 'next/link'
+export const metadata: Metadata = {
+  title: 'Login',
+  description: 'Login to your account',
+}
 
-export default function Login() {
-  const { isLoading, handleLogin } = useLogin()
-
-  return (
-    <>
-      <h1 className="auth-heading">Login</h1>
-      <AuthForm
-        type="login"
-        isLoading={isLoading}
-        submit={(data: SignUpData) => handleLogin(data)}
-      />
-      <div className="flex-center flex-col text-para-md">
-        <div id="clerk-captcha"></div>
-        <div className="flex-center space-x-2">
-          <p>Don’t have an account?</p>
-          <Link className="text-third" href="/auth/sign-up">
-            Sign up
-          </Link>
-        </div>
-      </div>
-    </>
-  )
+export default function LoginPage() {
+  return <Login />
 }
