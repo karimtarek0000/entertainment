@@ -102,7 +102,7 @@ export default function AuthForm<T extends LoginData | SignUpData>({
         )
       })}
       <Button disabled={!isFormValid() || isLoading} type="submit">
-        {isLoading ? 'Loading...' : authUI[type].submit.text}
+        {isLoading ? <span className="loading" /> : authUI[type].submit.text}
       </Button>
     </form>
   )
