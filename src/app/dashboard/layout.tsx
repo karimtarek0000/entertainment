@@ -1,6 +1,6 @@
 import Dashboard from '@/components/templates/Dashboard'
 
-export default function AuthLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
