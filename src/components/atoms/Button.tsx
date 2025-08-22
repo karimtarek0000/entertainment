@@ -32,7 +32,7 @@ export default function Button({
         variants[variant],
         attrs.className || '',
       )}
-      data-testId={variant}
+      data-testid={variant}
     >
       {children}
     </button>
