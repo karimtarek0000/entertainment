@@ -98,11 +98,16 @@ export default function AuthForm<T extends LoginData | SignUpData>({
             error={!!errors[field.name]}
             errorMessage={errors[field.name]}
             autoFocus={index === 0}
+            data-testid={`${type}-${field.name}`}
           />
         )
       })}
       <Button disabled={!isFormValid() || isLoading} type="submit">
-        {isLoading ? <span className="loading" /> : authUI[type].submit.text}
+        {isLoading ? (
+          <span data-testid="loading" className="loading" />
+        ) : (
+          authUI[type].submit.text
+        )}
       </Button>
     </form>
   )
