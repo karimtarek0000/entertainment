@@ -22,7 +22,11 @@ export default function Input({
           error ? 'border-red-500 !mb-3.5 focus:border-red-500' : ''
         } ${attrs.className}`}
       />
-      {error && <span className=" text-third block mb-2">{errorMessage}</span>}
+      {error && (
+        <span data-testid="error" className=" text-third block mb-2">
+          {errorMessage}
+        </span>
+      )}
     </>
   )
 }
