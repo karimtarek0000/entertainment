@@ -109,7 +109,7 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
           height: '100%',
           width: '100%',
           position: 'relative',
-          backgroundImage: isPlaying ? 'none' : `url(${imageURL})`,
+          backgroundImage: isReady ? 'none' : `url(${imageURL})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           overflow: 'hidden',
@@ -123,7 +123,7 @@ const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(
               onReady={onReady}
               onStateChange={onStateChange}
               style={{
-                opacity: isPlaying ? 1 : 0,
+                opacity: isReady ? 1 : 0,
                 pointerEvents: 'none',
                 height: '100%',
               }}
