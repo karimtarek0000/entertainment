@@ -68,21 +68,6 @@ body {
   }
 }
 
-/* For touch devices (mobile/tablet) */
-@media (hover: none) {
-  .card-wrapper__actions {
-    @apply opacity-100;
-  }
-
-  .card-wrapper__actions:focus-within {
-    @apply opacity-0;
-  }
-
-  .card-wrapper__actions:active {
-    @apply opacity-100;
-  }
-}
-
 /* Other */
 @utility flex-center {
   @apply flex justify-center items-center;
