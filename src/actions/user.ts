@@ -12,8 +12,7 @@ export const setUserCookie = async (userData: {
   const cookieStore = await cookies()
   cookieStore.set('user-info', JSON.stringify(userData), {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: 'lax',
     path: '/',
   })
 }
