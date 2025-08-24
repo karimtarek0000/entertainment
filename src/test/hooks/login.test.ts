@@ -1,20 +1,13 @@
 import { setUserCookie } from '@/actions/user'
 import { useLogin } from '@/hooks/Login'
+import { mockToast } from '@/test/setup'
 import { useAuth, useSignIn } from '@clerk/nextjs'
 import { act, renderHook } from '@testing-library/react'
-import toast from 'react-hot-toast'
 
 // Mock dependencies
 vi.mock('@clerk/nextjs', () => ({
   useSignIn: vi.fn(),
   useAuth: vi.fn(),
-}))
-vi.mock('react-hot-toast', () => ({
-  __esModule: true,
-  default: {
-    error: vi.fn(),
-    success: vi.fn(),
-  },
 }))
 vi.mock('@/actions/user', () => ({ setUserCookie: vi.fn() }))
 
@@ -22,19 +15,13 @@ describe('useLogin', () => {
   const mockSignInCreate = vi.fn()
   const mockSetActive = vi.fn()
   const mockSetUserCookie = setUserCookie as unknown as ReturnType<typeof vi.fn>
-  const mockToast = toast as unknown as {
-    error: ReturnType<typeof vi.fn>
-    success: ReturnType<typeof vi.fn>
-  }
-
-  beforeEach(() => {
-    vi.clearAllMocks()
-    useSignIn.mockReturnValue({
-      signIn: { create: mockSignInCreate },
-      setActive: mockSetActive,
-      isLoaded: true,
-    })
-    useAuth.mockReturnValue({ userId: null })
+  ;(useSignIn as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    signIn: { create: mockSignInCreate },
+    setActive: mockSetActive,
+    isLoaded: true,
+  })
+  ;(useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    userId: null,
   })
 
   it('should set isLoading to true when handleLogin is called', async () => {

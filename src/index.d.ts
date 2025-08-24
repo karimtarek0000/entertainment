@@ -16,7 +16,7 @@ declare global {
   }
 
   interface SignUpData extends LoginData {
-    repeatPassword: string
+    repeatPassword?: string
   }
 
   interface CardData {
