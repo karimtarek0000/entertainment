@@ -28,6 +28,7 @@ export default function Card({ data, children }: CardProps) {
     <div>
       <div className="card group/card">
         <Button
+          data-testid="bookmark-button"
           variant="secondary"
           onClick={toggleBookmarkHandler}
           className="z-40"
@@ -40,12 +41,18 @@ export default function Card({ data, children }: CardProps) {
         {children}
       </div>
       <div className="mt-2">
-        <figure className="flex items-center gap-x-1 text-fifth text-[11px] md:text-para-sm">
+        <figure
+          data-testid="card-info"
+          className="flex items-center gap-x-1 text-fifth text-[11px] md:text-para-sm"
+        >
           {data.year} ·{' '}
           <RenderSVG name={icons[data.type]} className="fill-fifth size-2.5" />{' '}
           {data.type} · {data.rating}
         </figure>
-        <h2 className="mt-1 text-head-xs md:text-head-sm font-medium">
+        <h2
+          data-testid="card-title"
+          className="mt-1 text-head-xs md:text-head-sm font-medium"
+        >
           {data.title}
         </h2>
       </div>
